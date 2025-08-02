@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아사이언스 - 대한민국 1등 과학 브랜드</title>
+    <!-- Pretendard Font -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background-color: #f5f6f8;
+            color: #333;
+            line-height: 1.5;
+            font-feature-settings: "tnum";
+        }
+
+        /* 헤더 스타일 */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e8e9ea;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .header-main {
+            padding: 16px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000; /* 검정색 로고 */
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .search-btn, .menu-btn {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            color: #000; /* 검정색 아이콘 */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .search-btn:hover, .menu-btn:hover {
+            background: #f8f9fa;
+            border-color: #304FFE;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: transparent;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 1200px;
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 20px;
+                padding: 0 20px;
+            }
+
+            .header-content {
+                max-width: 1200px;
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 32px;
+            }
+
+            .search-btn, .menu-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+            }
+        }
+
+        /* 컴포넌트 기본 스타일 */
+        .component {
+            background: white;
+            margin: 16px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .component[data-component-visible="false"] {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .component {
+                margin: 0 0 20px 0;
+            }
+        }
+
+        .component-title {
+            padding: 20px 20px 16px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #212529;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .component-title::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            bottom: 8px;
+            width: 24px;
+            height: 3px;
+            background: #304FFE; /* 포인트 색상 */
+            border-radius: 2px;
+        }
+
+        .more-link {
+            color: #495057; /* 어두운 회색 */
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border: 1px solid #e9ecef;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .more-link:hover {
+            background: #f8f9fa;
+            border-color: #304FFE;
+            color: #304FFE;
+        }
+
+        /* 컴포넌트 1: 헤드라인 뉴스 (6건) */
+        .headline-section {
+            background: white;
+            margin: 16px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .headline-main {
+            background: linear-gradient(135deg, #304FFE, #536DFE);
+            color: white;
+            padding: 24px;
+            min-height: 200px;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .headline-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.4));
+        }
+
+        .headline-main-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .headline-category {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .headline-main-title {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .headline-date {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .headline-sub-list {
+            padding: 16px;
+        }
+
+        .headline-sub-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f3f4;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .headline-sub-item:hover {
+            color: #304FFE;
+            padding-left: 8px;
+        }
+
+        .headline-sub-item:last-child {
+            border-bottom: none;
+        }
+
+        /* 컴포넌트 2: 뉴스형 Type1 */
+        .news-list {
+            padding: 0 20px 20px;
+        }
+
+        .news-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f1f3f4;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .news-item:hover {
+            color: #304FFE;
+            padding-left: 8px;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        /* 컴포넌트 3: 뉴스형 Type2 (카테고리 탭) */
+        .category-tabs {
+            padding: 0 20px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            margin-bottom: 16px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-tab {
+            padding: 8px 16px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .category-tab.active {
+            background: #304FFE;
+            color: white;
+        }
+
+        /* 컴포넌트 4: 기본형 Type1 */
+        .content-grid {
+            padding: 0 20px 20px;
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .content-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .content-item {
+            min-width: 140px;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .content-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #adb5bd;
+            margin-bottom: 12px;
+            border: 1px solid #f1f3f4;
+        }
+
+        .content-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #212529;
+            line-height: 1.4;
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .content-author {
+            font-size: 11px;
+            color: #6c757d;
+        }
+
+        /* 컴포넌트 5: 기본형 Type2 (D-Day) */
+        .thumbnail-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(48, 79, 254, 0.9);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* 컴포넌트 6: 기본형 Type3 (두 줄형) */
+        .content-grid-double {
+            padding: 0 20px 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .content-grid-double {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* 컴포넌트 7: 테마형 */
+        .theme-section {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 0 20px 20px;
+        }
+
+        .theme-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #212529;
+        }
+
+        /* 컴포넌트 8: 키워드형 */
+        .keyword-container {
+            padding: 0 20px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .keyword-tag {
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 16px;
+            font-size: 12px;
+            color: #495057;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .keyword-tag:hover {
+            background: #304FFE;
+            color: white;
+            border-color: #304FFE;
+        }
+
+        .keyword-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* 컴포넌트 9: 동영상형 (유튜브 숏츠 비율) */
+        .video-grid {
+            padding: 0 20px 20px;
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .video-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .video-item {
+            min-width: 180px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 320px; /* 9:16 비율 */
+            background: linear-gradient(135deg, #333, #666);
+            border-radius: 12px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .video-thumbnail::after {
+            content: '▶';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        /* 컴포넌트 10: 랭킹형 */
+        .ranking-list {
+            padding: 0 20px 20px;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f3f4;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .ranking-item:hover {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .ranking-item:last-child {
+            border-bottom: none;
+        }
+
+        .ranking-number {
+            width: 24px;
+            height: 24px;
+            background: #304FFE;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .ranking-thumbnail {
+            width: 50px;
+            height: 38px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: #999;
+        }
+
+        .ranking-content {
+            flex: 1;
+        }
+
+        .ranking-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #333;
+            line-height: 1.3;
+            margin-bottom: 2px;
+        }
+
+        .ranking-author {
+            font-size: 11px;
+            color: #666;
+        }
+
+        /* 컴포넌트 11: 매거진형 */
+        .magazine-section {
+            padding: 20px;
+        }
+
+        .magazine-main {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .magazine-thumbnail {
+            width: 120px;
+            height: 90px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .magazine-content {
+            flex: 1;
+        }
+
+        .magazine-category {
+            font-size: 11px;
+            color: #304FFE;
+            margin-bottom: 4px;
+        }
+
+        .magazine-title {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 4px;
+            color: #212529;
+        }
+
+        .magazine-date {
+            font-size: 11px;
+            color: #6c757d;
+        }
+
+        .magazine-sub-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .magazine-sub-item {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .magazine-sub-thumbnail {
+            width: 60px;
+            height: 45px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .magazine-sub-content {
+            flex: 1;
+        }
+
+        .magazine-sub-title {
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 1.3;
+            color: #333;
+        }
+
+        /* 광고 배너 */
+        .ad-banner {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px dashed #dee2e6;
+            padding: 24px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 20px 16px;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .ad-banner::before {
+            content: '📢';
+            display: block;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        /* 이벤트 배너 */
+        .event-banner {
+            background: linear-gradient(135deg, #304FFE, #536DFE);
+            color: white;
+            padding: 24px;
+            margin: 20px 16px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .event-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .event-description {
+            font-size: 14px;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        /* 사이드바 */
+        .sidebar {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .sidebar {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .ad-banner, .event-banner {
+                margin: 20px 0;
+            }
+        }
+
+        /* 푸터 */
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 16px;
+            margin-bottom: 16px;
+        }
+
+        .footer-link {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .footer-copyright {
+            font-size: 11px;
+            color: #999;
+            line-height: 1.4;
+        }
+
+        /* Top 버튼 */
+        .top-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: #304FFE;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(48, 79, 254, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .top-button.show {
+            display: flex;
+        }
+
+        .top-button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-main">
+            <div class="header-content">
+                <a href="#" class="logo">동아사이언스</a>
+                <form class="search-container" onsubmit="handleSearch(event)">
+                    <button type="submit" class="search-submit">🔍</button>
+                    <input type="text" class="search-input" placeholder="검색어를 입력하세요">
+                </form>
+                <div class="header-actions">
+                    <button class="menu-btn" onclick="openMenu()">☰</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- 컴포넌트 1: 헤드라인 뉴스 (6건) -->
+            <section class="headline-section" data-component="headline" data-component-visible="true">
+                <div class="headline-main" onclick="viewArticle(1)">
+                    <div class="headline-main-content">
+                        <div class="headline-category">AI·로봇</div>
+                        <h2 class="headline-main-title">AI가 발견한 새로운 항생제, 슈퍼박테리아 치료 가능성 열어</h2>
+                        <div class="headline-date">2025.08.02</div>
+                    </div>
+                </div>
+                <div class="headline-sub-list">
+                    <div class="headline-sub-item" onclick="viewArticle(2)">한국형 달 착륙선 개발 현황, 2032년 발사 목표로 순조롭게 진행</div>
+                    <div class="headline-sub-item" onclick="viewArticle(3)">북극 빙하 역대 최소 기록, 기후변화 가속화 우려 증폭</div>
+                    <div class="headline-sub-item" onclick="viewArticle(4)">줄기세포 치료제로 실명 환자 시력 회복 첫 성공 사례</div>
+                    <div class="headline-sub-item" onclick="viewArticle(5)">차세대 배터리 기술 개발로 전기차 주행거리 2배 향상</div>
+                    <div class="headline-sub-item" onclick="viewArticle(6)">양자컴퓨터 상용화 임박, 보안체계 대전환 필요성 제기</div>
+                </div>
+            </section>
+
+            <!-- 컴포넌트 2: 뉴스형 Type1 -->
+            <section class="component" data-component="news-type1" data-component-visible="true">
+                <div class="component-title">
+                    주요 뉴스
+                    <a href="#" class="more-link">더보기</a>
+                </div>
+                <div class="news-list">
+                    <div class="news-item">화성 대기에서 메탄 검출, 생명체 존재 가능성 제기</div>
+                    <div class="news-item">국내 연구진, 차세대 배터리 소재 개발로 용량 3배 향상</div>
+                    <div class="news-item">딥러닝으로 단백질 구조 예측 정확도 95% 달성</div>
+                    <div class="news-item">CRISPR 기술로 유전성 실명 치료 성공 사례 발표</div>
+                </div>
+            </section>
+
+            <!-- 이벤트 배너 -->
+            <div class="event-banner" onclick="viewEvent('summer-camp')">
+                <div class="event-title">🏕️ 2025 여름 과학캠프 참가자 모집</div>
+                <div class="event-description">초등학생 대상 | 7월 15일~8월 15일 | 선착순 100명</div>
+            </div>
+
+            <!-- 컴포넌트 3: 뉴스형 Type2 (카테고리 탭) -->
+            <section class="component" data-component="news-type2" data-component-visible="true">
+                <div class="component-title">
+                    카테고리별 뉴스
+                    <a href="#" class="more-link">더보기</a>
+                </div>
+                <div class="category-tabs">
+                    <button class="category-tab active" onclick="switchCategory(this)">전체</button>
+                    <button class="category-tab" onclick="switchCategory(this)">AI·로봇</button>
+                    <button class="category-tab" onclick="switchCategory(this)">우주·천문</button>
+                    <button class="category-tab" onclick="switchCategory(this)">의학</button>
+                    <button class="category-tab" onclick="switchCategory(this)">환경</button>
+                    <button class="category-tab" onclick="switchCategory(this)">에너지</button>
+                </div>
+                <div class="news-list">
+                    <div class="news-item">화성 탐사선 큐리오시티, 새로운 유기물 흔적 발견</div>
+                    <div class="news-item">mRNA 백신 기술로 암 치료 임상시험 시작</div>
+                    <div class="news-item">태양광 효율 40% 돌파, 페로브스카이트 기술 혁신</div>
+                    <div class="news-item">AI 기상예측 모델, 기존 예보 정확도 30% 향상</div>
+                </div>
+            </section>
+
+            <!-- Google Ad -->
+            <div class="ad-banner">
+                Google Ads 배너 영역<br>
+                <small>320x100 모바일 배너</small>
+            </div>
+
+            <!-- 컴포넌트 4: 기본형 Type1 (D라이브러리) - 책 비율 추가 -->
+            <section class="component" data-component="basic-type1" data-component-visible="true">
+                <div class="component-title">
+                    D라이브러리
+                    <a href="#" class="more-link">더보기</a>
+                </div>
+                <div class="content-grid book-grid">
+                    <div class="content-item">
+                        <div class="thumbnail">디지털콘텐츠</div>
+                        <div class="content-title">우주의 신비 특별판</div>
+                        <div class="content-author">동아사이언스</div>
+                    </div>
+                    <div class="content-item">
+                        <div class="thumbnail">학습자료</div>
+                        <div class="content-title">과학실험 가이드북</div>
+                        <div class="content-author">편집부</div>
+                    </div>
+                    <div class="content-item">
+                        <div class="thumbnail">AI특집</div>
+                        <div class="content-title">AI 기초 학습서</div>
+                        <div class="content-author">AI연구팀</div>
+                    </div>
+                    <div class="content-item">
+                        <div class="thumbnail">화학사전</div>
+                        <div class="content-title">화학 원소 사전</div>
+                        <div class="content-author">화학팀</div>
+                    </div>
+                    <div class="content-item">
+                        <div class="thumbnail">물리학</div>
+                        <div class="content-title">양자역학 입문서</div>
+                        <div class="content-author">물리학회</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 컴포넌트 5: 기본형 Type2 (D-Day 표시) -->
+            <section class="component" data-component="basic-type2" data-component-visible="true">
+                <div class="component-title">
+                    DS스토어 신상품
+                    <a href="#" class="more-link">더보기</a>
+                </div>
+                <div class="content-grid">
+                    <div class="content-item">
+                        <div class="thumbnail" style="position: relative;">
+                            <div class="thumbnail-badge">D-3</div>
+                            상품이미지
+                        </div>
+                        <div class="content-title">어린이 과학잡지 정기구독</div>
+                        <div class="content-author" style="color: #304FFE; font-weight: 600;">월 12,000원</div>
+                    </div>
+                    <div class="content-item">
+                        <div class="thumbnail">실험키트</div>
+                        <div class="content-title">화학실험 키트</div>
+                        <div class="content-author" style="color: #304FFE; font-weight: 600;">45,000원</div>
+                    </div>
+                    <div class="content-item">
+                        <div class="thumbnail" style="position: relative;">
+                            <div class="thumbnail-badge">D-7</div>
+                            망원경
+                        </div>
+                        <div class="content-title">천체망원경 입문용</div>
+                        <div class="content-author" style="color: #304FFE; font-weight: 600;">89,000원</div>
+                    </div>
+                    <div class="content-item">
+                        <div class="thumbnail">도서세트</div>
+                        <div class="content-title">과학도서 세트</div>
+                        <div class="content-author" style="color: #304FFE; font-weight: 600;">32,000원</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 컴포넌트 6: 기본형 Type3 (두 줄형) -->
+            <section class="component" data-component="basic-type3" data-component-visible="true">
+                <div class="component-title">
+                    인기 콘텐츠
+                    <a href="#" class="more-link">더보기</a>
+                </div>
+                <div class="content-grid-double">
+                    <div class="content-item">
+                        <div class="thumbnail">콘텐츠</div>
+                        <div class="content-title">양자컴퓨터의 원리</div>
+                        <div class="content-author">물리학팀</div>
+                    </div>
+                    <div class="content-item">
+                        <div class="thumbnail">콘텐츠</div>
+                        <div class="content-title">기후변화와 미래</div>
+                        <div class="content-author">환경과학팀</div>
+                    </div>
+                    <div class="content-item">
+                        <div class="thumbnail">콘텐츠</div>
+                        <div class="content-title">DNA 편집의 미래</div>
+                        <div class="content-author">생명공학팀</div>
+                    </div>
+                    <div class="content-item">
+                        <div class="thumbnail">콘텐츠</div>
+                        <div class="content-title">화성 탐사 프로젝트</div>
+                        <div class="content-author">우주개발팀</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 이벤트 배너 2 -->
+            <div class="event-banner" onclick="viewEvent('magazine-subscription')" style="background: linear-gradient(135deg, #FF6B35, #F7931E);">
+                <div class="event-title">📚 과학동아 연간 구독 특별 할인</div>
+                <div class="event-description">지금 구독하면 30% 할인 + 과학 키트 증정</div>
+            </div>
+
+            <!-- 컴포넌트 7: 테마형 -->
+            <section class="component" data-component="theme-type" data-component-visible="true">
+                <div class="component-title">
+                    이달의 특집: AI와 미래
+                    <a href="#" class="more-link">더보기</a>
+                </div>
+                <div class="theme-section">
+                    <div class="theme-title">AI가 바꾸는 우리의 일상</div>
+                    <div class="content-grid">
+                        <div class="content-item">
+                            <div class="thumbnail">AI특집</div>
+                            <div class="content-title">챗GPT와 대화형 AI</div>
+                            <div class="content-author">AI연구소</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="thumbnail">AI특집</div>
+                            <div class="content-title">자율주행의 현재와 미래</div>
+                            <div class="content-author">모빌리티팀</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="thumbnail">AI특집</div>
+                            <div class="content-title">AI 의료진단 시스템</div>
+                            <div class="content-author">의료AI팀</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Google Ad -->
+            <div class="ad-banner">
+                Google Ads 네이티브 광고<br>
+                <small>콘텐츠 중간 광고</small>
+            </div>
+
+            <!-- 컴포넌트 8: 키워드형 -->
+            <section class="component" data-component="keyword-type" data-component-visible="true">
+                <div class="component-title">인기 키워드</div>
+                <div class="keyword-container">
+                    <a href="#" class="keyword-tag">
+                        <div class="keyword-dot" style="background: #ff3e66;"></div>
+                        AI
+                    </a>
+                    <a href="#" class="keyword-tag">
+                        <div class="keyword-dot" style="background: #33acd2;"></div>
+                        양자컴퓨터
+                    </a>
+                    <a href="#" class="keyword-tag">
+                        <div class="keyword-dot" style="background: #7CB342;"></div>
+                        우주탐사
+                    </a>
+                    <a href="#" class="keyword-tag">
+                        <div class="keyword-dot" style="background: #FF6B35;"></div>
+                        기후변화
+                    </a>
+                    <a href="#" class="keyword-tag">
+                        유전공학
+                    </a>
+                    <a href="#" class="keyword-tag">
+                        로봇
+                    </a>
+                    <a href="#" class="keyword-tag">
+                        나노기술
+                    </a>
+                    <a href="#" class="keyword-tag">
+                        바이오
+                    </a>
+                </div>
+            </section>
+
+            <!-- 컴포넌트 9: 동영상형 (유튜브 숏츠 비율) -->
+            <section class="component" data-component="video-type" data-component-visible="true">
+                <div class="component-title">
+                    과학 동영상
+                    <a href="#" class="more-link">더보기</a>
+                </div>
+                <div class="video-grid">
+                    <div class="video-item">
+                        <div class="video-thumbnail">
+                            <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px;">3:45</div>
+                        </div>
+                        <div class="content-title">AI는 어떻게 학습하는가?</div>
+                    </div>
+                    <div class="video-item">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #2e7d32, #66bb6a);">
+                            <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px;">5:12</div>
+                        </div>
+                        <div class="content-title">우주정거장에서의 실험</div>
+                    </div>
+                    <div class="video-item">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #f57c00, #ffb74d);">
+                            <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px;">2:30</div>
+                        </div>
+                        <div class="content-title">양자역학 쉽게 이해하기</div>
+                    </div>
+                    <div class="video-item">
+                        <div class="video-thumbnail" style="background: linear-gradient(135deg, #7b1fa2, #ba68c8);">
+                            <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px;">4:20</div>
+                        </div>
+                        <div class="content-title">CRISPR 유전자 편집</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 컴포넌트 10: 랭킹형 -->
+            <section class="component" data-component="ranking-type" data-component-visible="true">
+                <div class="component-title">
+                    인기 콘텐츠 Top 10
+                </div>
+                <div class="category-tabs">
+                    <button class="category-tab active" onclick="switchRanking(this)">전체</button>
+                    <button class="category-tab" onclick="switchRanking(this)">뉴스</button>
+                    <button class="category-tab" onclick="switchRanking(this)">콘텐츠</button>
+                </div>
+                <div class="ranking-list">
+                    <div class="ranking-item">
+                        <div class="ranking-number">1</div>
+                        <div class="ranking-thumbnail">썸네일</div>
+                        <div class="ranking-content">
+                            <div class="ranking-title">노벨상 수상자가 밝힌 양자역학의 미래</div>
+                            <div class="ranking-author">과학기획팀</div>
+                        </div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-number">2</div>
+                        <div class="ranking-thumbnail">썸네일</div>
+                        <div class="ranking-content">
+                            <div class="ranking-title">기후변화 대응 신기술, 탄소 포집 효율 2배 향상</div>
+                            <div class="ranking-author">환경과학팀</div>
+                        </div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-number">3</div>
+                        <div class="ranking-thumbnail">썸네일</div>
+                        <div class="ranking-content">
+                            <div class="ranking-title">한국형 달 착륙선 개발 현황과 향후 계획</div>
+                            <div class="ranking-author">우주개발팀</div>
+                        </div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-number">4</div>
+                        <div class="ranking-thumbnail">썸네일</div>
+                        <div class="ranking-content">
+                            <div class="ranking-title">줄기세포 치료제 임상시험 성공적 완료</div>
+                            <div class="ranking-author">의학팀</div>
+                        </div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-number">5</div>
+                        <div class="ranking-thumbnail">썸네일</div>
+                        <div class="ranking-content">
+                            <div class="ranking-title">반도체 신소재 개발로 컴퓨팅 성능 혁신</div>
+                            <div class="ranking-author">IT과학팀</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+                </div>
+                <div class="ranking-list">
+                    <div class="ranking-item">
+                        <div class="ranking-number">1</div>
+                        <div class="ranking-thumbnail">썸네일</div>
+                        <div class="ranking-content">
+                            <div class="ranking-title">노벨상 수상자가 밝힌 양자역학의 미래</div>
+                            <div class="ranking-author">과학기획팀</div>
+                        </div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-number">2</div>
+                        <div class="ranking-thumbnail">썸네일</div>
+                        <div class="ranking-content">
+                            <div class="ranking-title">기후변화 대응 신기술, 탄소 포집 효율 2배 향상</div>
+                            <div class="ranking-author">환경과학팀</div>
+                        </div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-number">3</div>
+                        <div class="ranking-thumbnail">썸네일</div>
+                        <div class="ranking-content">
+                            <div class="ranking-title">한국형 달 착륙선 개발 현황과 향후 계획</div>
+                            <div class="ranking-author">우주개발팀</div>
+                        </div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-number">4</div>
+                        <div class="ranking-thumbnail">썸네일</div>
+                        <div class="ranking-content">
+                            <div class="ranking-title">줄기세포 치료제 임상시험 성공적 완료</div>
+                            <div class="ranking-author">의학팀</div>
+                        </div>
+                    </div>
+                    <div class="ranking-item">
+                        <div class="ranking-number">5</div>
+                        <div class="ranking-thumbnail">썸네일</div>
+                        <div class="ranking-content">
+                            <div class="ranking-title">반도체 신소재 개발로 컴퓨팅 성능 혁신</div>
+                            <div class="ranking-author">IT과학팀</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 이벤트 배너 3 -->
+            <div class="event-banner" onclick="viewEvent('science-contest')" style="background: linear-gradient(135deg, #7CB342, #689F38);">
+                <div class="event-title">🏆 제10회 청소년 과학 논문 대회</div>
+                <div class="event-description">참가 신청 기간: 8월 1일 ~ 8월 31일</div>
+            </div>
+
+            <!-- 컴포넌트 11: 매거진형 -->
+            <section class="component" data-component="magazine-type" data-component-visible="true">
+                <div class="component-title">
+                    과학동아 최신호
+                    <a href="#" class="more-link">더보기</a>
+                </div>
+                <div class="magazine-section">
+                    <div class="magazine-main">
+                        <div class="magazine-thumbnail"></div>
+                        <div class="magazine-content">
+                            <div class="magazine-category">커버스토리</div>
+                            <div class="magazine-title">AI 시대, 인간의 창의성은 어떻게 진화할까?</div>
+                            <div class="magazine-date">2025.08.01</div>
+                        </div>
+                    </div>
+                    <div class="magazine-sub-list">
+                        <div class="magazine-sub-item">
+                            <div class="magazine-sub-thumbnail"></div>
+                            <div class="magazine-sub-content">
+                                <div class="magazine-category" style="font-size: 10px;">특집</div>
+                                <div class="magazine-sub-title">양자컴퓨터가 바꿀 미래 산업</div>
+                            </div>
+                        </div>
+                        <div class="magazine-sub-item">
+                            <div class="magazine-sub-thumbnail"></div>
+                            <div class="magazine-sub-content">
+                                <div class="magazine-category" style="font-size: 10px;">인터뷰</div>
+                                <div class="magazine-sub-title">노벨상 수상자가 말하는 과학의 미래</div>
+                            </div>
+                        </div>
+                        <div class="magazine-sub-item">
+                            <div class="magazine-sub-thumbnail"></div>
+                            <div class="magazine-sub-content">
+                                <div class="magazine-category" style="font-size: 10px;">리포트</div>
+                                <div class="magazine-sub-title">기후변화 대응 최신 기술 동향</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Google Ad -->
+            <div class="ad-banner">
+                Google Ads 하단 배너<br>
+                <small>320x50 배너</small>
+            </div>
+        </div>
+
+        <!-- Sidebar for Desktop -->
+        <div class="sidebar">
+            <!-- 추천 상품 -->
+            <section class="component">
+                <div class="component-title" style="font-size: 16px;">
+                    추천 상품
+                    <a href="#" class="more-link" style="font-size: 11px;">더보기</a>
+                </div>
+                <div style="padding: 0 16px 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                    <div style="text-align: center;">
+                        <div style="width: 100%; height: 60px; background: #f0f0f0; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #999; margin-bottom: 6px;">상품</div>
+                        <div style="font-size: 10px; font-weight: 500; margin-bottom: 2px;">과학실험키트</div>
+                        <div style="font-size: 10px; color: #304FFE; font-weight: 600;">25,000원</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 100%; height: 60px; background: #f0f0f0; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #999; margin-bottom: 6px;">상품</div>
+                        <div style="font-size: 10px; font-weight: 500; margin-bottom: 2px;">어린이 잡지</div>
+                        <div style="font-size: 10px; color: #304FFE; font-weight: 600;">12,000원</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 100%; height: 60px; background: #f0f0f0; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #999; margin-bottom: 6px;">상품</div>
+                        <div style="font-size: 10px; font-weight: 500; margin-bottom: 2px;">망원경</div>
+                        <div style="font-size: 10px; color: #304FFE; font-weight: 600;">89,000원</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 100%; height: 60px; background: #f0f0f0; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #999; margin-bottom: 6px;">상품</div>
+                        <div style="font-size: 10px; font-weight: 500; margin-bottom: 2px;">과학도서</div>
+                        <div style="font-size: 10px; color: #304FFE; font-weight: 600;">18,000원</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 사이드바 광고 -->
+            <div class="ad-banner" style="margin: 0 0 16px 0;">
+                Google Ads 사이드바<br>
+                <small>300x250 배너</small>
+            </div>
+
+            <!-- 사이드바 이벤트 배너 -->
+            <div class="event-banner" style="margin: 0 0 16px 0; padding: 16px;">
+                <div style="font-size: 14px; font-weight: bold;">🎁 신규 회원 혜택</div>
+                <div style="font-size: 12px; margin-top: 4px;">가입 즉시 5,000원 쿠폰</div>
+            </div>
+
+            <!-- 인기뉴스 미니 -->
+            <section class="component">
+                <div class="component-title" style="font-size: 16px;">실시간 인기뉴스</div>
+                <div style="padding: 0 16px 16px;">
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; gap: 8px; cursor: pointer;">
+                            <div style="width: 50px; height: 38px; background: #f0f0f0; border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #999;">이미지</div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 11px; font-weight: 500; line-height: 1.3; margin-bottom: 2px;">AI 신약개발 성공사례</div>
+                                <div style="font-size: 9px; color: #666;">2시간 전</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px; cursor: pointer;">
+                            <div style="width: 50px; height: 38px; background: #f0f0f0; border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #999;">이미지</div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 11px; font-weight: 500; line-height: 1.3; margin-bottom: 2px;">우주탐사 새 발견</div>
+                                <div style="font-size: 9px; color: #666;">4시간 전</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px; cursor: pointer;">
+                            <div style="width: 50px; height: 38px; background: #f0f0f0; border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #999;">이미지</div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 11px; font-weight: 500; line-height: 1.3; margin-bottom: 2px;">기후변화 대응기술</div>
+                                <div style="font-size: 9px; color: #666;">6시간 전</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 또 다른 사이드바 광고 -->
+            <div class="ad-banner" style="margin: 0;">
+                Google Ads 사이드바 하단<br>
+                <small>300x100 배너</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" class="footer-link">이용약관</a>
+            <a href="#" class="footer-link">개인정보처리방침</a>
+            <a href="#" class="footer-link">청소년보호정책</a>
+            <a href="#" class="footer-link">회사정보</a>
+            <a href="#" class="footer-link">고객센터</a>
+            <a href="#" class="footer-link">제휴문의</a>
+        </div>
+        <div class="footer-copyright">
+            © 2025 동아사이언스. All rights reserved.<br>
+            서울시 중구 청계천로 7 동아미디어센터<br>
+            사업자등록번호: 123-45-67890
+        </div>
+    </footer>
+
+    <!-- Top Button -->
+    <button class="top-button" id="topButton" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // 컴포넌트 표시/숨김 관리
+        function toggleComponent(componentName, isVisible) {
+            const component = document.querySelector(`[data-component="${componentName}"]`);
+            if (component) {
+                component.setAttribute('data-component-visible', isVisible);
+            }
+        }
+
+        // 스크롤 이벤트
+        let lastScrollTop = 0;
+        const header = document.querySelector('.header');
+        const topButton = document.getElementById('topButton');
+
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Top 버튼 표시/숨김
+            if (scrollTop > 200) {
+                topButton.classList.add('show');
+            } else {
+                topButton.classList.remove('show');
+            }
+
+            // 헤더 숨김/표시 (스크롤 방향에 따라)
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // 검색 기능
+        function handleSearch(event) {
+            event.preventDefault();
+            const query = event.target.querySelector('.search-input').value;
+            if (query) {
+                alert(`"${query}" 검색 결과 페이지로 이동 (데모)`);
+            }
+        }
+
+        // 메뉴 기능
+        function openMenu() {
+            alert('전체 메뉴 기능은 데모용입니다.');
+        }
+
+        // 상단으로 스크롤
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 카테고리 탭 전환
+        function switchCategory(tab) {
+            // 모든 탭에서 active 제거
+            tab.parentElement.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            // 클릭된 탭에 active 추가
+            tab.classList.add('active');
+        }
+
+        // 랭킹 탭 전환
+        function switchRanking(tab) {
+            // 모든 탭에서 active 제거
+            tab.parentElement.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            // 클릭된 탭에 active 추가
+            tab.classList.add('active');
+        }
+
+        // 랭킹 더보기 토글
+        function toggleRanking() {
+            const items = document.querySelectorAll('.ranking-item.collapsed');
+            const btn = document.querySelector('.ranking-more-btn');
+            
+            if (items[0].style.display === 'flex' || items[0].style.display === '') {
+                items.forEach(item => item.style.display = 'none');
+                btn.textContent = '더보기';
+            } else {
+                items.forEach(item => item.style.display = 'flex');
+                btn.textContent = '접기';
+            }
+        }
+
+        // 기사 보기
+        function viewArticle(id) {
+            alert(`기사 ${id}번 상세 페이지로 이동 (데모)`);
+        }
+
+        // 이벤트 보기
+        function viewEvent(eventId) {
+            alert(`이벤트 "${eventId}" 상세 페이지로 이동 (데모)`);
+        }
+
+        // 클릭 효과
+        document.addEventListener('DOMContentLoaded', function() {
+            // 콘텐츠 아이템 클릭 효과
+            document.querySelectorAll('.content-item, .news-item, .ranking-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.backgroundColor = '#f8f9fa';
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.backgroundColor = '';
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+
+            // 관리자 모드 시뮬레이션 (콘솔에서 테스트 가능)
+            window.adminMode = {
+                hideComponent: function(componentName) {
+                    toggleComponent(componentName, 'false');
+                    console.log(`Component "${componentName}" hidden`);
+                },
+                showComponent: function(componentName) {
+                    toggleComponent(componentName, 'true');
+                    console.log(`Component "${componentName}" shown`);
+                },
+                listComponents: function() {
+                    const components = document.querySelectorAll('[data-component]');
+                    console.log('Available components:');
+                    components.forEach(comp => {
+                        const name = comp.getAttribute('data-component');
+                        const visible = comp.getAttribute('data-component-visible');
+                        console.log(`- ${name}: ${visible === 'true' ? 'visible' : 'hidden'}`);
+                    });
+                }
+            };
+        });
+    </script>
+</body>
+</html>
