@@ -1,0 +1,3328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동아사이언스 - 대한민국 1등 과학 브랜드</title>
+
+    <!-- Font Awesome 추가  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+
+    <!-- Pretendard Font -->
+    <style>
+        @font-face {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            font-display: swap;
+            src: local('Pretendard Regular'),
+                 url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Regular.woff2') format('woff2');
+        }
+        
+        @font-face {
+            font-family: 'Pretendard';
+            font-weight: 700;
+            font-display: swap;
+            src: local('Pretendard Bold'),
+                 url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Bold.woff2') format('woff2');
+        }
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background-color: #f5f6f8;
+            color: #333;
+            line-height: 1.5;
+            font-feature-settings: "tnum";
+        }
+
+        /* 프로모션 띠배너 */
+        .promotion-banner {
+            background: linear-gradient(90deg, #304FFE 0%, #536DFE 50%, #7C4DFF 100%);
+            color: white;
+            text-align: center;
+            position: fixed; /* relative 대신 fixed */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1002;
+            transition: all 0.3s ease;
+        }   
+
+        .promotion-banner-content {
+            padding: 10px 40px 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 40px;
+        }
+
+        .promotion-banner-text {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .promotion-banner-highlight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .promotion-close {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s ease;
+        }
+
+        .promotion-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 헤더 스타일 */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e8e9ea;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            height: 50px;
+            padding-top: 8px; /* 상단 여백 추가 */
+            padding-bottom: 8px; /* 하단 여백 추가 */
+            height: 66px; /* 높이 조정 (50 + 16) */
+        }
+
+
+        .header-main {
+            padding: 0 16px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 8px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            flex-shrink: 0;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            max-width: 400px;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 36px;
+            border: 2px solid #e9ecef;
+            border-radius: 18px;
+            padding: 0 45px 0 16px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s ease;
+            background: #f8f9fa;
+        }
+
+        .search-input:focus {
+            border-color: #304FFE;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(48, 79, 254, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: #6c757d;
+        }
+
+        .search-submit {
+            position: absolute;
+            right: 8px;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+            color: #6c757d;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .search-submit:hover {
+            background: #e9ecef;
+            color: #304FFE;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .header-btn {
+            width: 36px;
+            height: 36px;
+            background: transparent;
+            border: none;
+            border-radius: 50%;
+            color: #495057;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .header-btn:hover {
+            background: #f8f9fa;
+            color: #304FFE;
+        }
+
+        .header-btn-text {
+            font-size: 11px;
+            color: #6c757d;
+            margin-top: 2px;
+            display: none;
+        }
+
+        .menu-btn {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: #000;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .menu-btn:hover {
+            background: #f8f9fa;
+        }
+
+        /* 섹션 구분 타이틀 */
+        .section-divider {
+            background: #f1f3f4;
+            padding: 16px 20px;
+            margin: 32px 0 24px 0;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .section-divider-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #495057;
+            margin: 0;
+            letter-spacing: -0.3px;
+        }
+
+        @media (min-width: 768px) {
+            .section-divider {
+                padding: 20px 24px;
+                margin: 40px 0 32px 0;
+            }
+            
+            .section-divider-title {
+                font-size: 18px;
+            }
+        }
+
+        /* 모바일 전용 검색 버튼 */
+        .search-btn-mobile {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: #000;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .search-btn-mobile:hover {
+            background: #f8f9fa;
+        }
+
+        /* 모바일에서는 간단한 검색 아이콘만 */
+        @media (max-width: 767px) {
+            .search-container {
+                display: none;
+            }
+
+            .search-btn-mobile {
+                display: flex;
+            }
+
+            .header-actions {
+                gap: 12px;
+            }
+
+            .header-btn {
+                display: none;
+            }
+        }
+
+        /* PC에서는 햄버거 메뉴 숨김 */
+        @media (min-width: 768px) {
+            .logo {
+                font-size: 24px;
+            }
+
+            .menu-btn {
+                display: none;
+            }
+
+            .header-btn-text {
+                display: block;
+            }
+        }
+
+        /* 버티컬 메뉴 스타일 */
+        .vertical-menu {
+            background: #fff;
+            border-bottom: 1px solid #e8e9ea;
+            /* position: fixed; */ /* sticky 대신 fixed 사용 */
+            top: 50px; /* 헤더 아래 위치 */
+            left: 0;
+            right: 0;
+            z-index: 999;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            transition: all 0.3s ease;
+        }
+
+        .vertical-menu::-webkit-scrollbar {
+            display: none;
+        }
+
+        .vertical-menu-content {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+            gap: 20px;
+            height: 42px;
+            white-space: nowrap;
+        }
+
+        .menu-item {
+            color: #666;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 10px 0;
+            position: relative;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .menu-item:hover {
+            color: #304FFE;
+        }
+
+        .menu-item.active {
+            color: #304FFE;
+            font-weight: 700;
+        }
+
+        .menu-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #304FFE;
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* 메인 컨테이너 */
+        .main-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 16px;
+            margin-top: 92px; /* 헤더(50px) + 메뉴(42px) */
+        }
+
+        body.has-promotion .main-wrapper {
+            margin-top: 148px; /* 프로모션(40px) + 헤더(66px) + 메뉴(42px) */
+        }
+
+        .container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sidebar {
+            width: 340px;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .logo {
+                font-size: 24px;
+            }
+
+            .main-wrapper {
+                padding: 20px;
+            }
+
+            .sidebar {
+                display: block;
+            }
+        }
+
+        /* 컴포넌트 기본 스타일 */
+        .component {
+            background: white;
+            margin: 0 0 24px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .component[data-component-visible="false"] {
+            display: none;
+        }
+
+        .component-title {
+            padding: 20px 20px 16px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #212529;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .component-title::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            bottom: 8px;
+            width: 24px;
+            height: 3px;
+            background: #304FFE;
+            border-radius: 2px;
+        }
+
+        .more-link {
+            color: #495057;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border: 1px solid #e9ecef;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .more-link:hover {
+            background: #f8f9fa;
+            border-color: #304FFE;
+            color: #304FFE;
+        }
+
+        .q-icon {
+            background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        /* AiR 챗봇 메인 영역 스타일 */
+        .air-chatbot-main {
+            background: white;
+            margin: 0 0 24px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        
+        .air-main-header {
+            background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 33%, #ec4899 66%, #06b6d4 100%);
+            color: white;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .air-main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+        
+        .air-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .air-main-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .air-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .air-stats {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .air-main-content {
+            padding: 24px;
+        }
+        
+        /* 인기 질문 섹션 */
+        .air-popular-section {
+            margin-bottom: 32px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #212529;
+            background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .air-questions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        
+        .air-question-card {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .air-question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            background: white;
+        }
+        
+        .air-question-card:nth-child(1):hover { border-color: #7c3aed; box-shadow: 0 8px 20px rgba(124, 58, 237, 0.2); }
+        .air-question-card:nth-child(2):hover { border-color: #3b82f6; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2); }
+        .air-question-card:nth-child(3):hover { border-color: #ec4899; box-shadow: 0 8px 20px rgba(236, 72, 153, 0.2); }
+        .air-question-card:nth-child(4):hover { border-color: #06b6d4; box-shadow: 0 8px 20px rgba(6, 182, 212, 0.2); }
+        .air-question-card:nth-child(5):hover { border-color: #7c3aed; box-shadow: 0 8px 20px rgba(124, 58, 237, 0.2); }
+        .air-question-card:nth-child(6):hover { border-color: #3b82f6; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2); }
+        
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .q-time {
+            font-size: 12px;
+            color: #6c757d;
+        }
+        
+        .q-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: #212529;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        
+        .q-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .q-category {
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        /* 카테고리별 색상 */
+        .air-question-card:nth-child(1) .q-category { background: #7c3aed; }
+        .air-question-card:nth-child(2) .q-category { background: #3b82f6; }
+        .air-question-card:nth-child(3) .q-category { background: #ec4899; }
+        .air-question-card:nth-child(4) .q-category { background: #06b6d4; }
+        .air-question-card:nth-child(5) .q-category { background: #7c3aed; }
+        .air-question-card:nth-child(6) .q-category { background: #3b82f6; }
+        
+        .q-likes {
+            color: #ec4899;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        /* 입력 영역 */
+        .air-input-section {
+            background: #f8f9fa;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .air-input-wrapper {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .air-main-input {
+            flex: 1;
+            height: 48px;
+            border: 2px solid #e9ecef;
+            border-radius: 24px;
+            padding: 0 20px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s ease;
+            background: white;
+        }
+        
+        .air-main-input:focus {
+            border-color: transparent;
+            background: white;
+            box-shadow: 0 0 0 2px transparent, 0 0 0 3px #f3e8ff;
+            background-image: linear-gradient(white, white), 
+                              linear-gradient(135deg, #7c3aed 0%, #3b82f6 33%, #ec4899 66%, #06b6d4 100%);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+        }
+        
+        .air-main-send {
+            background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            padding: 0 24px;
+            border-radius: 24px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .air-main-send::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ec4899 0%, #06b6d4 100%);
+            transition: left 0.3s ease;
+        }
+        
+        .air-main-send:hover::before {
+            left: 0;
+        }
+        
+        .air-main-send:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+        }
+        
+        .air-main-send span,
+        .air-main-send i {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .air-suggestions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .suggestion-label {
+            font-size: 13px;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .suggestion-chip {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 13px;
+            color: #495057;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .suggestion-chip:nth-child(2):hover { background: #f3e8ff; border-color: #7c3aed; color: #7c3aed; }
+        .suggestion-chip:nth-child(3):hover { background: #dbeafe; border-color: #3b82f6; color: #3b82f6; }
+        .suggestion-chip:nth-child(4):hover { background: #fce7f3; border-color: #ec4899; color: #ec4899; }
+        
+        /* AiR 소개 */
+        .air-info-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .air-feature {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .air-feature i {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+        
+        .air-feature:nth-child(1) i { color: #7c3aed; }
+        .air-feature:nth-child(2) i { color: #3b82f6; }
+        .air-feature:nth-child(3) i { color: #ec4899; }
+        
+        .air-feature h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #212529;
+        }
+        
+        .air-feature p {
+            font-size: 13px;
+            color: #6c757d;
+            line-height: 1.5;
+        }
+        
+        /* 모바일 반응형 */
+        @media (max-width: 768px) {
+            .air-questions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .air-input-wrapper {
+                flex-direction: column;
+            }
+            
+            .air-main-send {
+                width: 100%;
+                justify-content: center;
+                height: 44px;
+            }
+            
+            .air-header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .air-info-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 헤드라인 뉴스 */
+        .headline-section {
+            background: white;
+            margin: 0 0 24px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .headline-main {
+            background: linear-gradient(135deg, #304FFE, #536DFE);
+            color: white;
+            padding: 32px 24px;
+            min-height: 280px;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .headline-main-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+        }
+
+        .headline-main-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .headline-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            z-index: 1;
+        }
+
+        .headline-main-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .headline-category {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .headline-main-title {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .headline-date {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .headline-sub-list {
+            padding: 20px 16px;
+        }
+
+        .headline-sub-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f1f3f4;
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .headline-sub-item:hover {
+            color: #304FFE;
+            padding-left: 8px;
+        }
+
+        .headline-sub-item:last-child {
+            border-bottom: none;
+        }
+
+        /* 가로 스크롤 컨테이너 - 개선된 버전 */
+        .scroll-container {
+            position: relative;
+            padding: 0 20px 20px;
+        }
+
+        .scroll-wrapper {
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-behavior: smooth;
+        }
+
+        .scroll-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .content-grid {
+            display: flex;
+            gap: 12px;
+            padding-bottom: 4px;
+        }
+
+        .content-item {
+            min-width: 140px;
+            width: 140px;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .content-item:hover {
+            transform: translateY(-2px);
+        }
+
+        /* 썸네일 스타일 */
+        .thumbnail {
+            width: 100%;
+            height: 100px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .magazine-thumbnail {
+            width: 100%;
+            height: 187px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .magazine-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #212529;
+            line-height: 1.4;
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .content-author {
+            font-size: 11px;
+            color: #6c757d;
+        }
+
+        /* 스크롤 버튼 - PC 전용 */
+        .scroll-btn-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: calc(100% - 40px);
+            left: 20px;
+            display: none;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .scroll-btn {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: all;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            font-size: 16px;
+            color: #495057;
+        }
+
+        .scroll-btn:hover:not(:disabled) {
+            background: #f8f9fa;
+            border-color: #304FFE;
+            color: #304FFE;
+        }
+
+        .scroll-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        @media (min-width: 768px) {
+            .scroll-btn-container {
+                display: flex;
+            }
+        }
+
+        /* 뉴스 리스트 */
+        .news-list {
+            padding: 0 20px 20px;
+        }
+
+        .news-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f1f3f4;
+            display: flex;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-item-thumbnail {
+            width: 80px;
+            height: 60px;
+            flex-shrink: 0;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        .news-item-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .news-item-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .news-item-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-item-summary {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .news-item:hover .news-item-title {
+            color: #304FFE;
+        }
+
+        /* 카테고리 탭 */
+        .category-tabs {
+            padding: 0 20px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            margin-bottom: 16px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-tab {
+            padding: 8px 16px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .category-tab.active {
+            background: #304FFE;
+            color: white;
+        }
+
+        /* 광고 배너 */
+        .ad-banner {
+            background: #f8f9fa;
+            padding: 0;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            min-height: 50px;
+        }
+
+        .ad-label {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            z-index: 1;
+        }
+
+        .ad-placeholder {
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            color: #999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 20px;
+        }
+
+        /* 광고 사이즈별 스타일 */
+        .ad-mobile-leaderboard .ad-placeholder {
+            height: 50px;
+            padding: 0;
+        }
+
+        .ad-infeed .ad-placeholder {
+            height: 250px;
+        }
+
+        .ad-medium-rectangle .ad-placeholder {
+            height: 250px;
+        }
+
+        .ad-large-mobile .ad-placeholder {
+            height: 100px;
+        }
+
+        .ad-sidebar-rectangle .ad-placeholder {
+            height: 250px;
+        }
+
+        .ad-sidebar-halfpage .ad-placeholder {
+            height: 600px;
+        }
+
+        /* 이벤트 배너 */
+        .event-banner {
+            background: linear-gradient(135deg, #304FFE, #536DFE);
+            color: white;
+            padding: 24px;
+            margin: 20px 0;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .event-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .event-description {
+            font-size: 14px;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        /* 푸터 */
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 16px;
+            margin-bottom: 16px;
+        }
+
+        .footer-link {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .footer-copyright {
+            font-size: 11px;
+            color: #999;
+            line-height: 1.4;
+        }
+
+        /* Top 버튼 */
+        .top-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: #304FFE;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(48, 79, 254, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .top-button.show {
+            display: flex;
+        }
+
+        .top-button:hover {
+            transform: scale(1.1);
+        }
+
+        .q-icon {
+            background: #1976d2;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        /* 사이드바 컴포넌트 */
+        .sidebar-component {
+            background: white;
+            margin: 0 0 16px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .sidebar-title {
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #212529;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        /* 랭킹 리스트 */
+        .ranking-list-simple {
+            padding: 0 20px 20px;
+        }
+
+        .ranking-item-simple {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f3f4;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .ranking-item-simple:hover {
+            background: #f8f9fa;
+            margin: 0 -20px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .ranking-item-simple:last-child {
+            border-bottom: none;
+        }
+
+        .ranking-number {
+            width: 28px;
+            height: 28px;
+            background: #304FFE;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* 1~3위 특별 색상 */
+        .ranking-item-simple:nth-child(1) .ranking-number {
+            background: #FFD700;
+            color: #333;
+        }
+
+        .ranking-item-simple:nth-child(2) .ranking-number {
+            background: #C0C0C0;
+            color: #333;
+        }
+
+        .ranking-item-simple:nth-child(3) .ranking-number {
+            background: #CD7F32;
+            color: white;
+        }
+
+        .ranking-content {
+            flex: 1;
+        }
+
+        .ranking-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #212529;
+            line-height: 1.4;
+            margin-bottom: 6px;
+        }
+
+        .ranking-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+        }
+
+        .ranking-category {
+            color: #304FFE;
+            font-weight: 500;
+        }
+
+        .ranking-views {
+            color: #6c757d;
+        }
+
+        /* 탭 버튼 스타일 - 모바일 전용 */
+        .ranking-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 0 20px 16px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        /* SNS 탭의 아이콘 배경 제거 */
+        [data-ranking="sns"] .ranking-number {
+            background: transparent !important;
+            width: auto !important;
+            height: auto !important;
+            border-radius: 0 !important;
+            border: none !important;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0;
+            margin-right: 12px;
+        }
+
+        .ranking-tab {
+            flex: 1;
+            padding: 10px 16px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .ranking-tab.active {
+            background: #304FFE;
+            color: white;
+        }
+
+        .ranking-content {
+            display: none;
+        }
+
+        .ranking-content.active {
+            display: block;
+        }
+
+        @media (min-width: 768px) {
+            .ranking-tabs {
+                display: none;
+            }
+            
+            .ranking-content {
+                display: block !important;
+            }
+        }
+
+        /* 사이드바 랭킹 스타일 */
+        .ranking-list-sidebar {
+            padding: 16px;
+        }
+
+        .ranking-item-sidebar {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f3f4;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .ranking-item-content {
+            flex: 1;
+        }   
+
+        .ranking-item-sidebar:hover {
+            background: #f8f9fa;
+            margin: 0 -8px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .ranking-item-sidebar:last-child {
+            border-bottom: none;
+        }
+
+        .ranking-number-small {
+            width: 20px;
+            height: 20px;
+            background: #304FFE;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .ranking-content-sidebar {
+            flex: 1;
+        }
+
+        .ranking-title-small {
+            font-size: 12px;
+            font-weight: 500;
+            color: #212529;
+            line-height: 1.4;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .ranking-views-small {
+            font-size: 10px;
+            color: #6c757d;
+        }
+
+        /* 두 줄형 그리드 */
+        .content-grid-double {
+            padding: 0 20px 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .content-grid-double {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* 테마 섹션 */
+        .theme-section {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 0 20px 20px;
+        }
+
+        .theme-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #212529;
+        }
+
+        /* 키워드 컨테이너 */
+        .keyword-container {
+            padding: 0 20px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .keyword-tag {
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 16px;
+            font-size: 12px;
+            color: #495057;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .keyword-tag:hover {
+            background: #304FFE;
+            color: white;
+            border-color: #304FFE;
+        }
+
+        .keyword-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* 동영상 그리드 */
+        .video-grid {
+            display: flex;
+            gap: 12px;
+            padding-bottom: 4px;
+        }
+
+        .video-item {
+            min-width: 180px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 320px;
+            background: #000;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-thumbnail::after {
+            content: '▶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .video-duration {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        /* 매거진 섹션 */
+        .magazine-section {
+            padding: 20px;
+        }
+
+        .magazine-main {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .magazine-main-thumbnail {
+            width: 90px;
+            height: 120px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .magazine-main-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .magazine-content {
+            flex: 1;
+        }
+
+        .magazine-category {
+            font-size: 10px; !important;
+            color: #304FFE;
+            margin-bottom: 4px;
+        }
+
+        .magazine-title {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 4px;
+            color: #212529;
+        }
+
+        .magazine-date {
+            font-size: 11px;
+            color: #6c757d;
+        }
+
+        .magazine-sub-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .magazine-sub-item {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .magazine-sub-item:hover {
+            transform: translateX(4px);
+        }
+
+        .magazine-sub-thumbnail {
+            width: 65px;
+            height: 85px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .magazine-sub-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .magazine-sub-content {
+            flex: 1;
+        }
+
+        .magazine-sub-title {
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.3;
+            color: #333;
+        }
+
+        /* 모바일 전용 */
+        .mobile-only {
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            /* 모바일에서는 sticky 유지 */
+            .header {
+                position: sticky;
+                top: 0;
+                padding-top: 8px;
+                padding-bottom: 8px;
+                height: 66px;
+            }
+            
+            .vertical-menu {
+                position: sticky;
+                top: 66px;
+            }
+            
+            .main-wrapper {
+                margin-top: 20px; /* 모바일에서는 작은 여백 */
+            }
+            
+            body.has-promotion .main-wrapper {
+                margin-top: 20px;
+            }
+            
+            .container {
+                display: block;
+            }
+
+            .main-content {
+                width: 100%;
+            }
+        }
+
+        /* PC 전용 */
+        @media (min-width: 768px) {
+            .mobile-only {
+                display: none;
+            }
+
+            .promotion-banner {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1002;
+            }
+
+            body.has-promotion {
+                padding-top: 40px;
+            }
+
+            body.has-promotion .header {
+                top: 40px;
+            }
+
+            body.has-promotion .vertical-menu {
+                top: 106px;
+            }
+            .vertical-menu {
+                top: 66px; /* 헤더 새 높이(66px) */
+            }
+
+            .promotion-banner-content {
+                font-size: 15px;
+            }
+
+            /* PC에서 모바일 광고를 데스크톱 사이즈로 변경 */
+            .ad-mobile-leaderboard .ad-placeholder {
+                height: 90px;
+            }
+
+            .ad-mobile-leaderboard .ad-placeholder small::after {
+                content: " → 728×90 리더보드";
+            }
+        }
+    </style>
+</head>
+<body class="has-promotion">
+    <!-- 프로모션 띠배너 -->
+    <div class="promotion-banner" id="promotionBanner">
+        <div class="promotion-banner-content">
+            <div class="promotion-banner-text">
+                <span>🎊 동아사이언스 여름 특별전</span>
+                <span class="promotion-banner-highlight">최대 50% 할인</span>
+                <span>과학 키트와 구독 상품을 특별한 가격으로 만나보세요!</span>
+            </div>
+            <button class="promotion-close" onclick="closePromotionBanner()">×</button>
+        </div>
+    </div>
+
+    <!-- 헤더 -->
+    <div class="header">
+        <div class="header-main">
+            <div class="header-content">
+                <a href="#" class="logo">동아사이언스</a>
+
+                <!-- 버티컬 메뉴 영역 -->
+                <nav class="vertical-menu">
+                    <div class="vertical-menu-content">
+                        <a href="#" class="menu-item active">Today</a>
+                        <a href="#" class="menu-item">뉴스</a>
+                        <a href="#" class="menu-item">라이브러리</a>
+                        <a href="#" class="menu-item">스토어</a>
+                        <a href="#" class="menu-item">AI</a>
+                        </div>
+                </nav>
+                
+                <form class="search-container" onsubmit="handleSearch(event)">
+                    <input type="text" class="search-input" placeholder="검색어를 입력하세요">
+                    <button type="submit" class="search-submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                
+                <div class="header-actions">
+                    <!-- PC 전용 아이콘들 -->
+                    <button class="header-btn" onclick="showLogin()" title="로그인">
+                        👤
+                    </button>
+                    <button class="header-btn" onclick="showMyPage()" title="마이페이지">
+                        📋
+                    </button>
+                    <button class="header-btn" onclick="showSettings()" title="설정">
+                        ⚙️
+                    </button>
+                    
+                    <!-- 모바일 전용 검색 아이콘 -->
+                    <button class="search-btn-mobile" onclick="openSearch()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    
+                    <!-- 모바일 전용 햄버거 메뉴 -->
+                    <button class="menu-btn" onclick="openMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="container">
+            <div class="main-content">
+                <!-- 컴포넌트 1: 헤드라인 뉴스 -->
+                <section class="headline-section" data-component="headline" data-component-visible="true">
+                    <div class="headline-main" onclick="viewArticle(1)">
+                        <div class="headline-main-bg">
+                            <img src="https://image.dongascience.com/Photo/2025/08/17542903860945.jpg" alt="헤드라인 이미지">
+                        </div>
+                        <div class="headline-main-content">
+                            <div class="headline-category">인간</div>
+                            <h2 class="headline-main-title">우주로 날아간 대장균, 어떻게 성장하고 번식할까</h2>
+                            <div class="headline-date">2025.08.02</div>
+                        </div>
+                    </div>
+                    <div class="headline-sub-list">
+                        <div class="headline-sub-item" onclick="viewArticle(2)">전공의 복귀 절차 착수…입영 특례·수련 보장이 쟁점 </div>
+                        <div class="headline-sub-item" onclick="viewArticle(3)">"플라스틱, 안전하지도 저렴하지도 않아"…글로벌 건강 영향 추적</div>
+                        <div class="headline-sub-item" onclick="viewArticle(4)">이론에 그친 '암흑 양자얽힘' 구현 성공…얽힘 수명 600배 늘어</div>
+                        <div class="headline-sub-item" onclick="viewArticle(5)">캄차카반도 화산 500년 만에 분화…규모 8.8 지진이 깨웠을까</div>
+                        <div class="headline-sub-item" onclick="viewArticle(6)">의대교수협 "복귀하는 의대생 국민께서 격려해달라"</div>
+                    </div>
+                </section>
+
+
+                    <!-- 오늘의 과학 -->
+                <section class="sidebar-component">
+                    <div class="sidebar-title">📅 오늘의 과학</div>
+                    <div style="padding: 16px;">
+                        <div style="font-size: 12px; color: #6c757d; margin-bottom: 12px;">기고</div>
+                                                <div style="font-size: 11px; color: #304FFE; font-weight: 600; margin-bottom: 8px;">박진영의 사회심리학</div>
+                        <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px; line-height: 1.4;">똑똑한 것 같지만 지혜롭지는 않은 사람들</h3>
+                        <p style="font-size: 13px; color: #495057; line-height: 1.5;">어떤 사람에 대해 '똑똑하지만 지혜롭지는 않다'는 생각을 하게 될 때가 있다. </p>
+                    </div>
+                </section>
+
+                <!-- 이벤트 배너 -->
+                <div class="event-banner" onclick="viewEvent('summer-camp')">
+                    <div class="event-title">🏕️ 2025 바다거북이 탐사대 참가자 모집</div>
+                    <div class="event-description">초등학생 대상 | 7월 15일~8월 15일 | 선착순 100명</div>
+                </div>
+                
+               
+
+                  <!-- Google Ad 2: 인피드 네이티브 광고 -->
+                <div class="ad-banner ad-infeed">
+                    <div class="ad-label">광고</div>
+                    <div class="ad-placeholder">
+                        Google Ads<br>
+                        <small>300×250 네이티브 광고</small>
+                    </div>
+                </div>
+                
+
+
+                <!-- 컴포넌트 3: 뉴스형 Type2 - 카테고리별 뉴스 -->
+                <section class="component" data-component="news-type2" data-component-visible="true">
+                    <div class="component-title">
+                        카테고리별 뉴스
+                        <a href="#" class="more-link">더보기</a>
+                    </div>
+                    <div class="category-tabs">
+                        <button class="category-tab active" onclick="switchCategory(this)">과학</button>
+                        <button class="category-tab" onclick="switchCategory(this)">인간</button>
+                        <button class="category-tab" onclick="switchCategory(this)">환경·자연</button>
+                        <button class="category-tab" onclick="switchCategory(this)">하이테크 기업</button>
+                        <button class="category-tab" onclick="switchCategory(this)">사람들</button>
+                    </div>
+                    <div class="news-list">
+                        <div class="news-item">
+                            <div class="news-item-thumbnail">
+                                <img src="https://image.dongascience.com/Photo/2025/07/d0e1ecc97b8be7980e54bf0d5ac3c0f7.jpg" alt="뉴스 썸네일">
+                            </div>
+                            <div class="news-item-content">
+                                <div class="news-item-title">화성 탐사선 큐리오시티, 새로운 유기물 흔적 발견</div>
+                                <div class="news-item-summary">화성 표면에서 생명체 존재 가능성을 시사하는 새로운 증거가 발견됐다.</div>
+                            </div>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-item-thumbnail">
+                                <img src="https://image.dongascience.com/Photo/2025/08/301e72699941d14fb571cf2bb16ece77.jpg" alt="뉴스 썸네일">
+                            </div>
+                            <div class="news-item-content">
+                                <div class="news-item-title">mRNA 백신 기술로 암 치료 임상시험 시작</div>
+                                <div class="news-item-summary">코로나19 백신 기술을 응용한 암 치료제 개발이 본격화되고 있다.</div>
+                            </div>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-item-thumbnail">
+                                <img src="https://image.dongascience.com/Photo/2025/08/038983579fd1f0e68186e2e27e4c8c07.jpg" alt="뉴스 썸네일">
+                            </div>
+                            <div class="news-item-content">
+                                <div class="news-item-title">태양광 효율 40% 돌파, 페로브스카이트 기술 혁신</div>
+                                <div class="news-item-summary">차세대 태양전지 기술이 상용화에 한 걸음 더 다가섰다.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+<section class="component mobile-only" data-component="ranking-type" data-component-visible="true">
+    <div class="component-title">
+        📊 실시간 인기 기사 TOP 5
+    </div>
+    <!-- 탭 버튼 -->
+    <div class="ranking-tabs">
+        <button class="ranking-tab active" onclick="switchRankingTab(this, 'realtime')">실시간 인기</button>
+        <button class="ranking-tab" onclick="switchRankingTab(this, 'sns')">SNS 공유</button>
+    </div>
+    
+    <!-- 실시간 인기 기사 -->
+    <div class="ranking-content active" data-ranking="realtime">
+        <div class="ranking-list-simple">
+            <div class="ranking-item-simple">
+                <div class="ranking-number">1</div>
+                <div class="ranking-item-content">
+                    <div class="ranking-title">이론에 그친 '암흑 양자얽힘' 구현 성공…얽힘 수명 600배 늘어</div>
+                    <div class="ranking-meta">
+                        <span class="ranking-category">물리학</span>
+                        <span class="ranking-views">조회 15,234</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ranking-item-simple">
+                <div class="ranking-number">2</div>
+                <div class="ranking-item-content">
+                    <div class="ranking-title">연구자 없는 AI로봇 실험시스템, 이차전지 양극재 탐색시간 93%↓</div>
+                    <div class="ranking-meta">
+                        <span class="ranking-category">AI</span>
+                        <span class="ranking-views">조회 12,890</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ranking-item-simple">
+                <div class="ranking-number">3</div>
+                <div class="ranking-item-content">
+                    <div class="ranking-title">스페이스X '크루드래건' 15시간 날아 ISS 도킹…6회 재사용 기록</div>
+                    <div class="ranking-meta">
+                        <span class="ranking-category">우주</span>
+                        <span class="ranking-views">조회 10,456</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ranking-item-simple">
+                <div class="ranking-number">4</div>
+                <div class="ranking-item-content">
+                    <div class="ranking-title">'폭염 아니면 폭우'…3일 밤부터 7일까지 호우 경계</div>
+                    <div class="ranking-meta">
+                        <span class="ranking-category">환경</span>
+                        <span class="ranking-views">조회 9,823</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ranking-item-simple">
+                <div class="ranking-number">5</div>
+                <div class="ranking-item-content">
+                    <div class="ranking-title">정부, 한-캐나다 과학기술대회서 한인과학기술자 소통·격려</div>
+                    <div class="ranking-meta">
+                        <span class="ranking-category">정책</span>
+                        <span class="ranking-views">조회 8,567</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SNS 공유된 기사 -->
+    <div class="ranking-content" data-ranking="sns">
+        <div class="ranking-list-simple">
+            <div class="ranking-item-simple">
+                <div class="ranking-number">↗️</div>
+                <div class="ranking-item-content">
+                    <div class="ranking-title">AI가 그린 우주 풍경화가 화제</div>
+                    <div class="ranking-meta">
+                        <span class="ranking-category">AI</span>
+                        <span class="ranking-views">공유 3,456</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ranking-item-simple">
+                <div class="ranking-number">↗️</div>
+                <div class="ranking-item-content">
+                    <div class="ranking-title">북극곰 서식지 보호 캠페인 확산</div>
+                    <div class="ranking-meta">
+                        <span class="ranking-category">환경</span>
+                        <span class="ranking-views">공유 2,890</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ranking-item-simple">
+                <div class="ranking-number">↗️</div>
+                <div class="ranking-item-content">
+                    <div class="ranking-title">초등학생이 발견한 새로운 곤충 종</div>
+                    <div class="ranking-meta">
+                        <span class="ranking-category">생물</span>
+                        <span class="ranking-views">공유 2,234</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ranking-item-simple">
+                <div class="ranking-number">↗️</div>
+                <div class="ranking-item-content">
+                    <div class="ranking-title">집에서 할 수 있는 간단한 과학 실험 10가지</div>
+                    <div class="ranking-meta">
+                        <span class="ranking-category">교육</span>
+                        <span class="ranking-views">공유 1,987</span>
+                    </div>
+                </div>
+            </div>
+            <div class="ranking-item-simple">
+                <div class="ranking-number">↗️</div>
+                <div class="ranking-item-content">
+                    <div class="ranking-title">화성에서 온 최신 사진 공개</div>
+                    <div class="ranking-meta">
+                        <span class="ranking-category">우주</span>
+                        <span class="ranking-views">공유 1,543</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+         <!-- 컴포넌트 8: 키워드형 - 인기 키워드 -->
+                <section class="component" data-component="keyword-type" data-component-visible="true">
+                    <div class="component-title">인기 키워드</div>
+                    <div class="keyword-container">
+                        <a href="#" class="keyword-tag">
+                            <div class="keyword-dot" style="background: #ff3e66;"></div>
+                            AI
+                        </a>
+                        <a href="#" class="keyword-tag">
+                            <div class="keyword-dot" style="background: #33acd2;"></div>
+                            양자컴퓨터
+                        </a>
+                        <a href="#" class="keyword-tag">
+                            <div class="keyword-dot" style="background: #7CB342;"></div>
+                            우주탐사
+                        </a>
+                        <a href="#" class="keyword-tag">
+                            <div class="keyword-dot" style="background: #FF6B35;"></div>
+                            기후변화
+                        </a>
+                        <a href="#" class="keyword-tag">
+                            유전공학
+                        </a>
+                        <a href="#" class="keyword-tag">
+                            로봇
+                        </a>
+                        <a href="#" class="keyword-tag">
+                            나노기술
+                        </a>
+                        <a href="#" class="keyword-tag">
+                            바이오
+                        </a>
+                        <a href="#" class="keyword-tag">
+                            <div class="keyword-dot" style="background: #9C27B0;"></div>
+                            메타버스
+                        </a>
+                        <a href="#" class="keyword-tag">
+                            신재생에너지
+                        </a>
+                        <a href="#" class="keyword-tag">
+                            뇌과학
+                        </a>
+                        <a href="#" class="keyword-tag">
+                            <div class="keyword-dot" style="background: #FDD835;"></div>
+                            화성탐사
+                        </a>
+                    </div>
+                </section>
+
+                <!-- AiR 챗봇 컴포넌트 (메인 영역) -->
+                <section class="component air-chatbot-main" data-component="air-chatbot" data-component-visible="true">
+                    <div class="air-main-header">
+                        <div class="air-header-content">
+                            <div class="air-title-group">
+                                <h2 class="air-main-title">
+                                    <span class="air-icon">🤖</span>
+                                    과학동아 AiR에게 물어보세요
+                                </h2>
+                                <p class="air-subtitle">AI가 답하는 모든 과학 질문! 궁금한 걸 물어보세요</p>
+                            </div>
+                            <div class="air-stats">
+                                <span class="stat-item">
+                                    <i class="fas fa-comments"></i>
+                                    누적 31,234개 질문
+                                </span>
+                                <span class="stat-item">
+                                    <i class="fas fa-fire"></i>
+                                    소크라테스
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="air-main-content">
+                        
+
+                        <!-- 질문 입력 영역 -->
+                        <div class="air-input-section">
+                            <div class="air-input-wrapper">
+                                <input type="text" class="air-main-input" placeholder="궁금한 과학 질문을 AiR에게 물어보세요! 예: 왜 하품은 전염될까요?">
+                                <button class="air-main-send">
+                                    <i class="fas fa-paper-plane"></i>
+                                    질문하기
+                                </button>
+                            </div>
+
+                        <!-- 실시간 인기 질문 -->
+                        <div class="air-popular-section">
+                            <h3 class="section-title">🔥 지금 많이 묻는 질문</h3>
+                            <div class="air-questions-grid">
+                                <div class="air-question-card">
+                                    <div class="q-header">
+                                        <span class="q-icon">Q</span>
+                                        </div>
+                                    <p class="q-text">블랙홀에 빠지면 정말 스파게티처럼 늘어나나요?</p>
+                                    <div class="q-footer">
+                                        
+                                        </div>
+                                </div>
+                                <div class="air-question-card">
+                                    <div class="q-header">
+                                        <span class="q-icon">Q</span>
+                                        
+                                    </div>
+                                    <p class="q-text">왜 하늘은 파란색이고 노을은 빨간색인가요?</p>
+                                    <div class="q-footer">
+                                                                                                                    </div>
+                                </div>
+                                <div class="air-question-card">
+                                    <div class="q-header">
+                                        <span class="q-icon">Q</span>
+                                                                            </div>
+                                    <p class="q-text">공룡이 멸종하지 않았다면 인류는 진화할 수 있었을까요?</p>
+                                    <div class="q-footer">
+                                                                                                                    </div>
+                                </div>
+                                <div class="air-question-card">
+                                    <div class="q-header">
+                                        <span class="q-icon">Q</span>
+                                                                            </div>
+                                    <p class="q-text">식물도 통증을 느낄 수 있나요?</p>
+                                    <div class="q-footer">
+                                                                            </div>
+                                </div>
+                                                             
+                            </div>
+                        </div>
+                        
+                        
+                            <!--
+                            <div class="air-suggestions">
+                                <span class="suggestion-label">추천 질문:</span>
+                                <button class="suggestion-chip">지구온난화의 원인은?</button>
+                                <button class="suggestion-chip">DNA가 뭐예요?</button>
+                                <button class="suggestion-chip">우주의 끝은 어디인가요?</button>
+                            </div>-->
+                        </div>
+                        
+                        <!-- AiR 소개 
+                        <div class="air-info-section">
+                            <div class="air-feature">
+                                <i class="fas fa-brain"></i>
+                                <h4>AI 기반 답변</h4>
+                                <p>최신 AI 기술로 정확한 과학 정보 제공</p>
+                            </div>
+                            <div class="air-feature">
+                                <i class="fas fa-clock"></i>
+                                <h4>소크라테스</h4>
+                                <p>영재고, 과학고, 모의 면접 </p>
+                            </div>
+                            <div class="air-feature">
+                                <i class="fas fa-child"></i>
+                                <h4>쉬운 설명</h4>
+                                <p>어려운 과학도 쉽게 설명해드려요</p>
+                            </div>
+                        </div>
+                    </div>-->
+                </section>
+
+         <!-- 컴포넌트 4: 기본형 Type1 - d라이브러리 -->
+                <section class="component" data-component="basic-type1" data-component-visible="true">
+                    <div class="component-title">
+                        d라이브러리
+                        <a href="#" class="more-link">더보기</a>
+                    </div>
+                    <div class="scroll-container">
+                        <div class="scroll-wrapper">
+                            <div class="content-grid">
+                                <div class="content-item">
+                                    <div class="magazine-thumbnail">
+                                        <img src="https://images.dongascience.com/uploads/issue/thumbnail/199607/1714233597-7a138d7d-6d5c-48eb-ae5c-87beee40512b.jpg" alt="우주의 신비">
+                                    </div>
+                                    <div class="content-title">우주의 신비 특별판</div>
+                                    <div class="content-author">동아사이언스</div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="magazine-thumbnail">
+                                        <img src="https://images.dongascience.com/uploads/issue/thumbnail/202509/1745566665-8ec193f8-e5b9-4f2b-bba9-5b05c49980fe.jpg" alt="과학실험 가이드북">
+                                    </div>
+                                    <div class="content-title">과학실험 가이드북</div>
+                                    <div class="content-author">편집부</div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="magazine-thumbnail">
+                                        <img src="https://images.dongascience.com/uploads/ebook/thumbnail/202504/1744777904-b16d78ab-e942-48a3-a8e0-0d6fb61013a6.jpg" alt="AI 기초 학습서">
+                                    </div>
+                                    <div class="content-title">AI 기초 학습서</div>
+                                    <div class="content-author">AI연구팀</div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="magazine-thumbnail">
+                                        <img src="https://images.dongascience.com/uploads/ebook/thumbnail/202407/1720400862-65e4b7e0-7f77-4c54-b811-1ad177391356.png" alt="화학 원소 사전">
+                                    </div>
+                                    <div class="content-title">화학 원소 사전</div>
+                                    <div class="content-author">화학팀</div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="magazine-thumbnail">
+                                        <img src="https://images.dongascience.com/uploads/ebook/thumbnail/202507/1752553692-abd686b2-ce69-46ef-b250-73cad30b49eb.jpg" alt="양자역학 입문서">
+                                    </div>
+                                    <div class="content-title">양자역학 입문서</div>
+                                    <div class="content-author">물리학회</div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="magazine-thumbnail">
+                                        <img src="https://images.dongascience.com/uploads/issue/thumbnail/202424/1732871568-822993ab-487c-4e4d-9fa5-a17fa46b2453.jpg" alt="생명공학의 미래">
+                                    </div>
+                                    <div class="content-title">생명공학의 미래</div>
+                                    <div class="content-author">바이오팀</div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="magazine-thumbnail">
+                                        <img src="https://images.dongascience.com/uploads/issue/thumbnail/202509/1745566778-7db1d6a3-3954-438f-ae04-e9db0a28b0ac.jpg" alt="로봇공학 교과서">
+                                    </div>
+                                    <div class="content-title">로봇공학 교과서</div>
+                                    <div class="content-author">로봇연구소</div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="magazine-thumbnail">
+                                        <img src="https://images.dongascience.com/uploads/issue/thumbnail/202406/1720932195-70870f7e-09e9-479f-a61f-9650c2098ba2.png" alt="태양계 탐험기">
+                                    </div>
+                                    <div class="content-title">태양계 탐험기</div>
+                                    <div class="content-author">천문학회</div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="magazine-thumbnail">
+                                        <img src="https://images.dongascience.com/uploads/issue/thumbnail/202508/1744675726-2fec5e6c-0ef1-447d-b2a2-811decb890c2.jpg" alt="기후과학 입문">
+                                    </div>
+                                    <div class="content-title">기후과학 입문</div>
+                                    <div class="content-author">환경연구팀</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="scroll-btn-container">
+                            <button class="scroll-btn prev" onclick="scrollContent(this, 'prev')" disabled>‹</button>
+                            <button class="scroll-btn next" onclick="scrollContent(this, 'next')">›</button>
+                        </div>
+                    </div>
+                </section>
+
+                
+                <!-- 컴포넌트 11: 매거진형 - d라이브러리 시리즈   -->
+                <section class="component" data-component="magazine-type" data-component-visible="true">
+                    <div class="component-title">
+                        과학취재상 수상 기념 기후변화 특집 시리즈
+                        <a href="#" class="more-link">더보기</a>
+                    </div>
+                    <div class="magazine-section">
+                        <div class="magazine-main">
+                            <div class="magazine-main-thumbnail">
+                                <img src="https://images.dongascience.com/uploads/issue/thumbnail/202503/1753840313-bc2a7feb-14cb-45fd-8193-11f699001b5f.jpg" alt="기후변화의 불씨 ">
+                            </div>
+                            <div class="magazine-content">
+                                <div class="magazine-category">커버스토리</div>
+                                <div class="magazine-title">뜨거운 바다, 메마른 땅, 거센 바람 기후변화가 키운 산불</div>
+                                <div class="magazine-date">2025.03.01</div>
+                            </div>
+                        </div>
+                        <div class="magazine-sub-list">
+                            <div class="magazine-sub-item">
+                                <div class="magazine-sub-thumbnail">
+                                    <img src="https://images.dongascience.com/uploads/article/Contents/202504/1745987400-e7df9490-e138-40ab-a678-8238274d2f06.png" alt="특집">
+                                </div>
+                                <div class="magazine-sub-content">
+                                    <div class="magazine-category" style="font-size: 10px;">특집</div>
+                                    <div class="magazine-sub-title">산불로 사라진 산 그리고 삶 과학이 되살리는 방법</div>
+                                </div>
+                            </div>
+                            <div class="magazine-sub-item">
+                                <div class="magazine-sub-thumbnail">
+                                    <img src="https://images.dongascience.com/uploads/article/Contents/202504/1745986975-1fb0233a-c3d4-4de3-a8f8-0c973485ebd6.png" alt="인터뷰">
+                                </div>
+                                <div class="magazine-sub-content">
+                                    <div class="magazine-category" style="font-size: 10px;">인터뷰</div>
+                                    <div class="magazine-sub-title">토종 산불지연제, 그 효과는? | 국립산림과학원 </div>
+                                </div>
+                            </div>
+                            <div class="magazine-sub-item">
+                                <div class="magazine-sub-thumbnail">
+                                    <img src="https://images.dongascience.com/uploads/article/Contents/202504/1745986408-0182c60b-e607-4f42-b1e6-00f78c1b713b.png" alt="리포트">
+                                </div>
+                                <div class="magazine-sub-content">
+                                    <div class="magazine-category" style="font-size: 10px;">리포트</div>
+                                    <div class="magazine-sub-title">할리우드 뒤덮은 분홍색 가루 | 사상 최악의 캘리포니아 산불</div>
+                                </div>
+                            </div>
+                            <div class="magazine-sub-item">
+                                <div class="magazine-sub-thumbnail">
+                                    <img src="https://image.dongascience.com/Photo/2023/09/811bee33167bf49075bba2dd3aa741d5.png" alt="표지">
+                                </div>
+                                <div class="magazine-sub-content">
+                                    <div class="magazine-category" style="font-size: 10px;">표지로 읽는 과학</div>
+                                    <div class="magazine-sub-title">20년간 산불이 대기오염에 미친 영향</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                   <!-- Google Ad 1: 모바일 리더보드 -->
+                <div class="ad-banner ad-mobile-leaderboard">
+                    <div class="ad-label">광고</div>
+                    <div class="ad-placeholder">
+                        Google Ads<br>
+                        <small>320×50 모바일 배너</small>
+                    </div>
+                </div>
+
+                 <!-- 컴포넌트 9: 동영상형 - 과학 동영상 -->
+                <section class="component" data-component="video-type" data-component-visible="true">
+                    <div class="component-title">
+                        과학 동영상
+                        <a href="#" class="more-link">더보기</a>
+                    </div>
+                    <div class="scroll-container">
+                        <div class="scroll-wrapper">
+                            <div class="video-grid">
+                                <div class="video-item">
+                                    <div class="video-thumbnail">
+                                        <img src="https://i.ytimg.com/vi/2qNelzw2QTg/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLCwtOgfzn_LRSIQI17YusQG_nezZw" alt="AI 학습">
+                                        <div class="video-duration">3:45</div>
+                                    </div>
+                                    <div class="content-title">AI는 어떻게 학습하는가?</div>
+                                </div>
+                                <div class="video-item">
+                                    <div class="video-thumbnail">
+                                        <img src="https://i.ytimg.com/vi/dPB-LVAEUoo/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA1-H8cTYp5WTNKvghXsMjuI5tbSw" alt="우주정거장">
+                                        <div class="video-duration">5:12</div>
+                                    </div>
+                                    <div class="content-title">우주정거장에서의 실험</div>
+                                </div>
+                                <div class="video-item">
+                                    <div class="video-thumbnail">
+                                        <img src="https://i.ytimg.com/vi/dPB-LVAEUoo/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLA1-H8cTYp5WTNKvghXsMjuI5tbSw" alt="양자역학">
+                                        <div class="video-duration">2:30</div>
+                                    </div>
+                                    <div class="content-title">양자역학 쉽게 이해하기</div>
+                                </div>
+                                <div class="video-item">
+                                    <div class="video-thumbnail">
+                                        <img src="https://i.ytimg.com/vi/qv7dM586rAo/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLArDrvCERsC6VtcR5UsEpQmBTOtbQ" alt="CRISPR">
+                                        <div class="video-duration">4:20</div>
+                                    </div>
+                                    <div class="content-title">CRISPR 유전자 편집</div>
+                                </div>
+                                <div class="video-item">
+                                    <div class="video-thumbnail">
+                                        <img src="hhttps://i.ytimg.com/vi/xcpDyidDApo/oardefault.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLDUtOAvzumGYdi789Y_STs77MN_MA" alt="블랙홀">
+                                        <div class="video-duration">6:15</div>
+                                    </div>
+                                    <div class="content-title">블랙홀의 비밀</div>
+                                </div>
+                                <div class="video-item">
+                                    <div class="video-thumbnail">
+                                        <img src="https://i.ytimg.com/vi/q7HUwzTK44A/oar2.jpg?sqp=-oaymwEoCJUDENAFSFqQAgHyq4qpAxcIARUAAIhC2AEB4gEKCBgQAhgGOAFAAQ==&rs=AOn4CLBO-8e2C44bdu8YH31JwVFor6uXCQ" alt="나노기술">
+                                        <div class="video-duration">3:58</div>
+                                    </div>
+                                    <div class="content-title">나노기술의 응용</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="scroll-btn-container">
+                            <button class="scroll-btn prev" onclick="scrollContent(this, 'prev')" disabled>‹</button>
+                            <button class="scroll-btn next" onclick="scrollContent(this, 'next')">›</button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 이벤트 배너 2 -->
+                <div class="event-banner" onclick="viewEvent('magazine-subscription')" style="background: linear-gradient(135deg, #FF6B35, #F7931E);">
+                    <div class="event-title">📚 과학동아 연간 구독 특별 할인</div>
+                    <div class="event-description">지금 구독하면 30% 할인 + 과학 키트 증정</div>
+                </div>
+
+                 <!-- 컴포넌트 7: 테마형 - 이달의 특집: AI와 미래 -->
+                <section class="component" data-component="theme-type" data-component-visible="true">
+                    <div class="component-title">
+                        연재과학 시리즈
+                        <a href="#" class="more-link">더보기</a>
+                    </div>
+                    <div class="theme-section">
+                        <div class="theme-title">박진영의 사회심리학</div>
+                        <div class="scroll-container">
+                            <div class="scroll-wrapper">
+                                <div class="content-grid">
+                                    <div class="content-item">
+                                        <div class="thumbnail">
+                                            <img src="https://image.dongascience.com/Photo/2025/08/17540250941741.jpg" alt="챗GPT">
+                                        </div>
+                                        <div class="content-title">똑똑한 것 같지만 지혜롭지는 않은 사람들</div>
+                                        <div class="content-author">2025.08.02</div>
+                                    </div>
+                                    <div class="content-item">
+                                        <div class="thumbnail">
+                                            <img src="https://image.dongascience.com/Photo/2025/07/1753419206266.jpg" alt="자율주행">
+                                        </div>
+                                        <div class="content-title">마음의 독립은 '행복'으로 가는 유일한 길</div>
+                                        <div class="content-author">2025.07.26</div>
+                                    </div>
+                                    <div class="content-item">
+                                        <div class="thumbnail">
+                                            <img src="https://image.dongascience.com/Photo/2025/07/17528156865326.jpg" alt="AI 의료진단">
+                                        </div>
+                                        <div class="content-title">슬픔 속에 숨겨진 행복과 감사</div>
+                                        <div class="content-author">2025.07.19</div>
+                                    </div>
+                                    <div class="content-item">
+                                        <div class="thumbnail">
+                                            <img src="https://image.dongascience.com/Photo/2025/07/17522095740428.jpg" alt="로봇과 인간">
+                                        </div>
+                                        <div class="content-title">추억은 슬픔을 이기는 힘</div>
+                                        <div class="content-author">2025.07.12</div>
+                                    </div>
+                                    <div class="content-item">
+                                        <div class="thumbnail">
+                                            <img src="https://image.dongascience.com/Photo/2025/06/17509975564868.jpg" alt="AI 교육">
+                                        </div>
+                                        <div class="content-title">충동구매가 자존감을 높여주진 않는다</div>
+                                        <div class="content-author">2025.06.28</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scroll-btn-container">
+                                <button class="scroll-btn prev" onclick="scrollContent(this, 'prev')" disabled>‹</button>
+                                <button class="scroll-btn next" onclick="scrollContent(this, 'next')">›</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                 <!-- 컴포넌트 7: 테마형 - 이달의 특집: AI와 미래 -->
+                <section class="component" data-component="theme-type" data-component-visible="true">
+                    <div class="component-title">
+                        표지로 읽는 과학
+                        <a href="#" class="more-link">더보기</a>
+                    </div>
+                    <div class="theme-section">
+                        <div class="theme-title"></div>
+                        <div class="scroll-container">
+                            <div class="scroll-wrapper">
+                                <div class="content-grid">
+                                    <div class="content-item">
+                                        <div class="thumbnail">
+                                            <img src="http://image.dongascience.com/Photo/2025/08/17540283219303.png" alt="챗GPT">
+                                        </div>
+                                        <div class="content-title">빛 받으면 작동하는 나노기계</div>
+                                        <div class="content-author">사이언스</div>
+                                    </div>
+                                    <div class="content-item">
+                                        <div class="thumbnail">
+                                            <img src="http://image.dongascience.com/Photo/2025/08/17540218733659.png" alt="자율주행">
+                                        </div>
+                                        <div class="content-title">2억4700만년 전 파충류, 깃털 달린 공룡 증거일까</div>
+                                        <div class="content-author">네이처</div>
+                                    </div>
+                                    <div class="content-item">
+                                        <div class="thumbnail">
+                                            <img src="http://image.dongascience.com/Photo/2025/07/17534284564821.jpg" alt="AI 의료진단">
+                                        </div>
+                                        <div class="content-title">해양보호구역서 불법 여전하지만 "지정 효과 유의미"</div>
+                                        <div class="content-author">사이언스</div>
+                                    </div>
+                                    <div class="content-item">
+                                        <div class="thumbnail">
+                                            <img src="http://image.dongascience.com/Photo/2025/07/17533393799789.png" alt="로봇과 인간">
+                                        </div>
+                                        <div class="content-title">3만 7000년 걸친 유라시아 감영병 지도 ... 가축화, 전염병 불렀다</div>
+                                        <div class="content-author">네이처</div>
+                                    </div>
+                                    <div class="content-item">
+                                        <div class="thumbnail">
+                                            <img src="http://image.dongascience.com/Photo/2025/07/17528272192766.jpg" alt="AI 교육">
+                                        </div>
+                                        <div class="content-title">스마트폰 네트워크로 지진 예측한다</div>
+                                        <div class="content-author">사이언스</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="scroll-btn-container">
+                                <button class="scroll-btn prev" onclick="scrollContent(this, 'prev')" disabled>‹</button>
+                                <button class="scroll-btn next" onclick="scrollContent(this, 'next')">›</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- 컴포넌트 2: 뉴스형 Type1 - 특집 기사 -->
+                <section class="component" data-component="news-type1" data-component-visible="true">
+                    <div class="component-title">
+                        주요 뉴스
+                        <a href="#" class="more-link">더보기</a>
+                    </div>
+                    <div class="news-list">
+                        <div class="news-item">
+                            <div class="news-item-thumbnail">
+                                <img src="https://via.placeholder.com/160x120/FF6B35/ffffff?text=News+1" alt="뉴스 썸네일">
+                            </div>
+                            <div class="news-item-content">
+                                <div class="news-item-title">화성 대기에서 메탄 검출, 생명체 존재 가능성 제기</div>
+                                <div class="news-item-summary">NASA 탐사선이 화성 대기에서 메탄을 검출하여 생명체 존재 가능성에 대한 기대감이 높아지고 있다.</div>
+                            </div>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-item-thumbnail">
+                                <img src="https://via.placeholder.com/160x120/7CB342/ffffff?text=News+2" alt="뉴스 썸네일">
+                            </div>
+                            <div class="news-item-content">
+                                <div class="news-item-title">국내 연구진, 차세대 배터리 소재 개발로 용량 3배 향상</div>
+                                <div class="news-item-summary">KAIST 연구팀이 개발한 신소재로 전기차 주행거리를 획기적으로 늘릴 수 있을 전망이다.</div>
+                            </div>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-item-thumbnail">
+                                <img src="https://via.placeholder.com/160x120/536DFE/ffffff?text=News+3" alt="뉴스 썸네일">
+                            </div>
+                            <div class="news-item-content">
+                                <div class="news-item-title">딥러닝으로 단백질 구조 예측 정확도 95% 달성</div>
+                                <div class="news-item-summary">구글 딥마인드의 알파폴드3가 단백질 구조 예측에서 새로운 이정표를 세웠다.</div>
+                            </div>
+                        </div>
+                        <div class="news-item">
+                            <div class="news-item-thumbnail">
+                                <img src="https://via.placeholder.com/160x120/FF3E66/ffffff?text=News+4" alt="뉴스 썸네일">
+                            </div>
+                            <div class="news-item-content">
+                                <div class="news-item-title">CRISPR 기술로 유전성 실명 치료 성공 사례 발표</div>
+                                <div class="news-item-summary">유전자 가위 기술을 이용한 치료법이 임상시험에서 긍정적인 결과를 보였다.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+               
+
+              
+
+               
+
+                <!-- 컴포넌트 5: 기본형 Type2 - DS스토어 신상품 -->
+                <section class="component" data-component="basic-type2" data-component-visible="true">
+                    <div class="component-title">
+                        DS스토어 베스트 인기 top10
+                        <a href="#" class="more-link">더보기</a>
+                    </div>
+                    <div class="scroll-container">
+                        <div class="scroll-wrapper">
+                            <div class="content-grid">
+                                <div class="content-item">
+                                    <div class="thumbnail" style="position: relative;">
+                                        <div style="position: absolute; top: 8px; left: 8px; background: rgba(48, 79, 254, 0.9); color: white; padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: 600;">D-3</div>
+                                        <img src="https://images.dongascience.com/attach/product/0141271c-8e3e-4230-b6e0-2de965fa5392.png?w=640" alt="어린이 과학동아 1년 정기구독">
+                                    </div>
+                                    <div class="content-title">어린이 과학잡지 정기구독</div>
+                                    <div class="content-author" style="color: #304FFE; font-weight: 600;">월 12,000원</div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="thumbnail">
+                                        <img src="https://images.dongascience.com/attach/product/4bad8740-65c1-4bde-96c7-3ae266b013f8.jpg?w=640" alt="화학실험 키트">
+                                    </div>
+                                    <div class="content-title">화학실험 키트</div>
+                                    <div class="content-author" style="color: #304FFE; font-weight: 600;">45,000원</div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="thumbnail" style="position: relative;">
+                                        <div style="position: absolute; top: 8px; left: 8px; background: rgba(48, 79, 254, 0.9); color: white; padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: 600;">D-7</div>
+                                        <img src="https://images.dongascience.com/upload/753342741/753342741_m_1.jpg?w=640" ALT="그래비틱스">
+                                    </div>
+                                    <div class="content-title">천체망원경 입문용</div>
+                                    <div class="content-author" style="color: #304FFE; font-weight: 600;">89,000원</div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="thumbnail">
+                                        <img src="https://images.dongascience.com/attach/product/4bad8740-65c1-4bde-96c7-3ae266b013f8.jpg?w=640" alt="화학실험 키트">
+                                    </div>
+                                    <div class="content-title">과학도서 세트</div>
+                                    <div class="content-author" style="color: #304FFE; font-weight: 600;">32,000원</div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="thumbnail">
+                                        <img src="https://images.dongascience.com/attach/product/4bad8740-65c1-4bde-96c7-3ae266b013f8.jpg?w=640" alt="화학실험 키트">
+                                    </div>
+                                    <div class="content-title">학생용 현미경 세트</div>
+                                    <div class="content-author" style="color: #304FFE; font-weight: 600;">68,000원</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="scroll-btn-container">
+                            <button class="scroll-btn prev" onclick="scrollContent(this, 'prev')" disabled>‹</button>
+                            <button class="scroll-btn next" onclick="scrollContent(this, 'next')">›</button>
+                        </div>
+                    </div>
+                </section>
+
+
+
+                <!-- Google Ad 4: 미디엄 직사각형 -->
+                <div class="ad-banner ad-medium-rectangle">
+                    <div class="ad-label">광고</div>
+                    <div class="ad-placeholder">
+                        Google Ads<br>
+                        <small>300×250 미디엄 직사각형</small>
+                    </div>
+                </div>
+
+                <!-- 컴포넌트 6: 기본형 Type3 - 인기 콘텐츠 (두 줄형) 
+                <section class="component" data-component="basic-type3" data-component-visible="true">
+                    <div class="component-title">
+                        인기 콘텐츠
+                        <a href="#" class="more-link">더보기</a>
+                    </div>
+                    <div class="content-grid-double">
+                        <div class="content-item">
+                            <div class="thumbnail">
+                                <img src="https://via.placeholder.com/140x100/304FFE/ffffff?text=Popular+1" alt="양자컴퓨터">
+                            </div>
+                            <div class="content-title">양자컴퓨터의 원리</div>
+                            <div class="content-author">물리학팀</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="thumbnail">
+                                <img src="https://via.placeholder.com/140x100/536DFE/ffffff?text=Popular+2" alt="기후변화">
+                            </div>
+                            <div class="content-title">기후변화와 미래</div>
+                            <div class="content-author">환경과학팀</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="thumbnail">
+                                <img src="https://via.placeholder.com/140x100/7CB342/ffffff?text=Popular+3" alt="DNA 편집">
+                            </div>
+                            <div class="content-title">DNA 편집의 미래</div>
+                            <div class="content-author">생명공학팀</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="thumbnail">
+                                <img src="https://via.placeholder.com/140x100/FF6B35/ffffff?text=Popular+4" alt="화성 탐사">
+                            </div>
+                            <div class="content-title">화성 탐사 프로젝트</div>
+                            <div class="content-author">우주개발팀</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="thumbnail">
+                                <img src="https://via.placeholder.com/140x100/FF3E66/ffffff?text=Popular+5" alt="AI 의료">
+                            </div>
+                            <div class="content-title">AI가 바꾸는 의료</div>
+                            <div class="content-author">의료AI팀</div>
+                        </div>
+                        <div class="content-item">
+                            <div class="thumbnail">
+                                <img src="https://via.placeholder.com/140x100/9C27B0/ffffff?text=Popular+6" alt="신재생에너지">
+                            </div>
+                            <div class="content-title">신재생에너지 혁명</div>
+                            <div class="content-author">에너지연구소</div>
+                        </div>
+                    </div>
+                </section>
+-->
+              
+                      
+
+               
+
+                <!-- Google Ad 3: 대형 모바일 배너 
+                <div class="ad-banner ad-large-mobile">
+                    <div class="ad-label">광고</div>
+                    <div class="ad-placeholder">
+                        Google Ads<br>
+                        <small>320×100 대형 모바일 배너</small>
+                    </div>
+                </div>
+
+               
+              -->  
+                
+
+                
+            </div>
+
+            <!-- 사이드바 (PC 전용) -->
+            <aside class="sidebar">
+                <!-- 개인화 영역 (로그인 유도) -->
+                <section class="sidebar-component">
+                    <div style="padding: 24px; text-align: center; background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%); border-radius: 12px;">
+                        <div style="font-size: 32px; margin-bottom: 12px;">🔐</div>
+                        <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">나만의 과학 뉴스</h3>
+                        <p style="font-size: 13px; color: #6c757d; margin-bottom: 16px;">로그인하고 맞춤 콘텐츠를 받아보세요</p>
+                        <button style="background: #304FFE; color: white; border: none; padding: 10px 24px; border-radius: 20px; font-size: 14px; font-weight: 600; cursor: pointer;">로그인</button>
+                    </div>
+                </section>
+
+                <!-- 사이드바 광고 -->
+                <div class="ad-banner ad-sidebar-rectangle">
+                    <div class="ad-label">광고</div>
+                    <div class="ad-placeholder">
+                        Google Ads<br>
+                        <small>300×250 미디엄 직사각형</small>
+                    </div>
+                </div>
+
+                <!-- 실시간 인기 기사 -->
+                <section class="sidebar-component">
+                    <div class="sidebar-title">📊 실시간 인기 기사</div>
+                    <div class="ranking-list-simple" style="padding: 16px;">
+                        <div class="ranking-item-simple" style="padding: 10px 0; margin: 0;">
+                            <div class="ranking-number" style="width: 24px; height: 24px; font-size: 12px;">1</div>
+                            <div class="ranking-content">
+                                <div class="ranking-title" style="font-size: 13px;">이론에 그친 '암흑 양자얽힘' 구현 성공…얽힘 수명 600배 늘어</div>
+                                <div class="ranking-views" style="font-size: 11px;">조회 15,234</div>
+                            </div>
+                        </div>
+                        <div class="ranking-item-simple" style="padding: 10px 0; margin: 0;">
+                            <div class="ranking-number" style="width: 24px; height: 24px; font-size: 12px;">2</div>
+                            <div class="ranking-content">
+                                <div class="ranking-title" style="font-size: 13px;">연구자 없는 AI로봇 실험시스템, 이차전지 양극재 탐색시간 93%↓</div>
+                                <div class="ranking-views" style="font-size: 11px;">조회 12,890</div>
+                            </div>
+                        </div>
+                        <div class="ranking-item-simple" style="padding: 10px 0; margin: 0;">
+                            <div class="ranking-number" style="width: 24px; height: 24px; font-size: 12px;">3</div>
+                            <div class="ranking-content">
+                                <div class="ranking-title" style="font-size: 13px;">스페이스X '크루드래건' 15시간 날아 ISS 도킹…6회 재사용 기록</div>
+                                <div class="ranking-views" style="font-size: 11px;">조회 10,456</div>
+                            </div>
+                        </div>
+                        <div class="ranking-item-simple" style="padding: 10px 0; margin: 0;">
+                            <div class="ranking-number" style="width: 24px; height: 24px; font-size: 12px;">4</div>
+                            <div class="ranking-content">
+                                <div class="ranking-title" style="font-size: 13px;">'폭염 아니면 폭우'…3일 밤부터 7일까지 호우 경계</div>
+                                <div class="ranking-views" style="font-size: 11px;">조회 9,823</div>
+                            </div>
+                        </div>
+                        <div class="ranking-item-simple" style="padding: 10px 0; margin: 0;">
+                            <div class="ranking-number" style="width: 24px; height: 24px; font-size: 12px;">5</div>
+                            <div class="ranking-content">
+                                <div class="ranking-title" style="font-size: 13px;">[사이언스게시판] 정부, 한-캐나다 과학기술대회(CKC)서 한인과학기술자 소통·격려</div>
+                                <div class="ranking-views" style="font-size: 11px;">조회 8,567</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                               
+                <!-- SNS공유된 기사 -->
+                <section class="sidebar-component">
+                    <div class="sidebar-title">🎁 SNS 공유된 기사</div>
+                    <div class="ranking-list-sidebar">
+                        <div class="ranking-item-sidebar">
+                            <div class="ranking-number">↗️</div>
+                            <div class="ranking-content-sidebar">
+                                <div class="ranking-title-small">AI가 그린 우주 풍경화가 화제</div>
+                                <div class="ranking-views-small">공유 3,456</div>
+                            </div>
+                        </div>
+                        <div class="ranking-item-sidebar">
+                            <div class="ranking-number">↗️</div>
+                            <div class="ranking-content-sidebar">
+                                <div class="ranking-title-small">AI가 그린 우주 풍경화가 화제</div>
+                                <div class="ranking-views-small">공유 3,456</div>
+                            </div>
+                        </div>
+                        <div class="ranking-item-sidebar">
+                            <div class="ranking-number">↗️</div>
+                            <div class="ranking-content-sidebar">
+                                <div class="ranking-title-small">AI가 그린 우주 풍경화가 화제</div>
+                                <div class="ranking-views-small">공유 3,456</div>
+                            </div>
+                        </div>
+                        <div class="ranking-item-sidebar">
+                            <div class="ranking-number">↗️</div>
+                            <div class="ranking-content-sidebar">
+                                <div class="ranking-title-small">AI가 그린 우주 풍경화가 화제</div>
+                                <div class="ranking-views-small">공유 3,456</div>
+                            </div>
+                        </div>
+                        <div class="ranking-item-sidebar">
+                            <div class="ranking-number">↗️</div>
+                            <div class="ranking-content-sidebar">
+                                <div class="ranking-title-small">AI가 그린 우주 풍경화가 화제</div>
+                                <div class="ranking-views-small">공유 3,456</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                
+
+                <!-- 오늘의 과학 -->
+                <section class="sidebar-component">
+                    <div class="sidebar-title">📅 오늘의 과학</div>
+                    <div style="padding: 16px;">
+                        <div style="font-size: 12px; color: #6c757d; margin-bottom: 12px;">기고</div>
+                                                <div style="font-size: 11px; color: #304FFE; font-weight: 600; margin-bottom: 8px;">박진영의 사회심리학</div>
+                        <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 8px; line-height: 1.4;">똑똑한 것 같지만 지혜롭지는 않은 사람들</h3>
+                        <p style="font-size: 13px; color: #495057; line-height: 1.5;">어떤 사람에 대해 '똑똑하지만 지혜롭지는 않다'는 생각을 하게 될 때가 있다. </p>
+                    </div>
+                </section>
+
+                <!-- 추천 상품 
+                <section class="sidebar-component">
+                    <div class="sidebar-title">추천 상품</div>
+                    <div style="padding: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                        <div style="text-align: center;">
+                            <div style="width: 100%; height: 80px; background: #f0f0f0; border-radius: 6px; overflow: hidden; margin-bottom: 6px;">
+                                <img src="https://via.placeholder.com/146x80/304FFE/ffffff?text=Product" alt="과학실험키트" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <div style="font-size: 11px; font-weight: 500; margin-bottom: 2px;">과학실험키트</div>
+                            <div style="font-size: 11px; color: #304FFE; font-weight: 600;">25,000원</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 100%; height: 80px; background: #f0f0f0; border-radius: 6px; overflow: hidden; margin-bottom: 6px;">
+                                <img src="https://via.placeholder.com/146x80/536DFE/ffffff?text=Magazine" alt="어린이 잡지" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <div style="font-size: 11px; font-weight: 500; margin-bottom: 2px;">어린이 잡지</div>
+                            <div style="font-size: 11px; color: #304FFE; font-weight: 600;">12,000원</div>
+                        </div>
+                    </div>
+                </section>
+                -->
+
+
+
+                <!-- 이벤트 배너 -->
+                <div class="event-banner" style="padding: 16px; margin-bottom: 16px;">
+                    <div style="font-size: 14px; font-weight: bold;">🎁 신규 회원 혜택</div>
+                    <div style="font-size: 12px; margin-top: 4px;">가입 즉시 5,000원 쿠폰</div>
+                </div>
+
+                <!-- 사이드바 하프페이지 광고 -->
+                <div class="ad-banner ad-sidebar-halfpage">
+                    <div class="ad-label">광고</div>
+                    <div class="ad-placeholder">
+                        Google Ads<br>
+                        <small>300×600 하프페이지</small>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" class="footer-link">이용약관</a>
+            <a href="#" class="footer-link">개인정보처리방침</a>
+            <a href="#" class="footer-link">청소년보호정책</a>
+            <a href="#" class="footer-link">회사정보</a>
+            <a href="#" class="footer-link">고객센터</a>
+            <a href="#" class="footer-link">제휴문의</a>
+        </div>
+        <div class="footer-copyright">
+            © 2025 동아사이언스. All rights reserved.<br>
+            서울시 중구 청계천로 7 동아미디어센터<br>
+            사업자등록번호: 123-45-67890
+        </div>
+    </footer>
+
+    <!-- Top Button -->
+    <button class="top-button" id="topButton" onclick="scrollToTop()">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+    <script>
+        // 프로모션 배너 닫기
+        function closePromotionBanner() {
+            const banner = document.getElementById('promotionBanner');
+            const body = document.body;
+            const header = document.querySelector('.header');
+            const verticalMenu = document.querySelector('.vertical-menu');
+            const mainWrapper = document.querySelector('.main-wrapper');
+            
+            banner.style.display = 'none';
+            body.classList.remove('has-promotion');
+            
+            // 요소 위치 조정
+            if (window.innerWidth >= 768) {
+                header.style.top = '0';
+                verticalMenu.style.top = '66px';
+                mainWrapper.style.marginTop = '108px';
+            }
+        }
+        // 스크롤 기능
+        function scrollContent(button, direction) {
+            const container = button.closest('.scroll-container');
+            const wrapper = container.querySelector('.scroll-wrapper');
+            const scrollAmount = 300;
+            
+            if (direction === 'prev') {
+                wrapper.scrollLeft -= scrollAmount;
+            } else {
+                wrapper.scrollLeft += scrollAmount;
+            }
+            
+            // 버튼 상태 업데이트
+            setTimeout(() => updateScrollButtons(container), 100);
+        }
+
+        // 스크롤 버튼 상태 업데이트
+        function updateScrollButtons(container) {
+            const wrapper = container.querySelector('.scroll-wrapper');
+            const prevBtn = container.querySelector('.scroll-btn.prev');
+            const nextBtn = container.querySelector('.scroll-btn.next');
+            
+            if (!prevBtn || !nextBtn) return;
+            
+            prevBtn.disabled = wrapper.scrollLeft <= 0;
+            nextBtn.disabled = wrapper.scrollLeft >= wrapper.scrollWidth - wrapper.clientWidth - 1;
+        }
+
+        // 스크롤 이벤트
+        let lastScrollTop = 0;
+        const header = document.querySelector('.header');
+        const verticalMenu = document.querySelector('.vertical-menu');
+        const topButton = document.getElementById('topButton');
+
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Top 버튼 표시/숨김
+            if (scrollTop > 200) {
+                topButton.classList.add('show');
+            } else {
+                topButton.classList.remove('show');
+            }
+
+            // 모바일에서만 헤더 숨김/표시
+            if (window.innerWidth < 768) {
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                    verticalMenu.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                    verticalMenu.style.transform = 'translateY(0)';
+                }
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // 검색 기능
+        function handleSearch(event) {
+            event.preventDefault();
+            const searchInput = event.target.querySelector('.search-input');
+            const query = searchInput ? searchInput.value : '';
+            if (query.trim()) {
+                alert(`"${query}" 검색 결과 페이지로 이동 (데모)`);
+            } else {
+                alert('검색어를 입력해주세요.');
+            }
+        }
+
+        // 모바일 검색 열기
+        function openSearch() {
+            alert('검색 페이지로 이동 (데모)');
+        }
+
+        // 메뉴 열기
+        function openMenu() {
+            alert('전체 메뉴 기능은 데모용입니다.');
+        }
+
+        // PC 헤더 기능들
+        function showLogin() {
+            alert('로그인 페이지로 이동 (데모)');
+        }
+
+        function showMyPage() {
+            alert('마이페이지로 이동 (데모)');
+        }
+
+        function showSettings() {
+            alert('설정 페이지로 이동 (데모)');
+        }
+
+        // 상단으로 스크롤
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // 카테고리 탭 전환
+        function switchCategory(tab) {
+            tab.parentElement.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+        }
+
+            // 랭킹 탭 전환 (모바일 전용)
+        function switchRankingTab(tab, type) {
+            // 모든 탭에서 active 제거
+            const tabs = tab.parentElement.querySelectorAll('.ranking-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // 클릭된 탭에 active 추가
+            tab.classList.add('active');
+            
+            // 모든 콘텐츠 숨김
+            const section = tab.closest('section');
+            const contents = section.querySelectorAll('.ranking-content');
+            contents.forEach(c => c.classList.remove('active'));
+            
+            // 선택된 콘텐츠만 표시
+            const selectedContent = section.querySelector(`[data-ranking="${type}"]`);
+            if (selectedContent) {
+                selectedContent.classList.add('active');
+            }
+        }
+
+        // 기사 보기
+        function viewArticle(id) {
+            alert(`기사 ${id}번 상세 페이지로 이동 (데모)`);
+        }
+
+        // 이벤트 보기
+        function viewEvent(eventId) {
+            alert(`이벤트 "${eventId}" 상세 페이지로 이동 (데모)`);
+        }
+
+        // DOM 로드 완료 시
+        document.addEventListener('DOMContentLoaded', function() {
+            // 모든 스크롤 컨테이너 초기화
+            const scrollContainers = document.querySelectorAll('.scroll-container');
+            
+            scrollContainers.forEach(container => {
+                const wrapper = container.querySelector('.scroll-wrapper');
+                
+                // 스크롤 이벤트 리스너
+                wrapper.addEventListener('scroll', () => {
+                    updateScrollButtons(container);
+                });
+                
+                // 초기 버튼 상태
+                updateScrollButtons(container);
+            });
+
+            // 메뉴 클릭 이벤트
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    document.querySelectorAll('.menu-item').forEach(menu => {
+                        menu.classList.remove('active');
+                    });
+                    
+                    this.classList.add('active');
+                });
+            });
+
+            // 클릭 효과
+            document.querySelectorAll('.content-item, .news-item, .ranking-item-simple').forEach(item => {
+                item.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+            
+            // AiR 챗봇 이벤트
+            const airInput = document.querySelector('.air-input');
+            const airSendBtn = document.querySelector('.air-send-btn');
+            const airQuestions = document.querySelectorAll('.air-question-item');
+            
+            // 메인 영역 AiR 이벤트
+            const airMainInput = document.querySelector('.air-main-input');
+            const airMainSend = document.querySelector('.air-main-send');
+            const airQuestionCards = document.querySelectorAll('.air-question-card');
+            const suggestionChips = document.querySelectorAll('.suggestion-chip');
+            
+            // 질문 카드 클릭 시
+            airQuestionCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const questionText = this.querySelector('.q-text').textContent;
+                    if (airMainInput) {
+                        airMainInput.value = questionText;
+                        airMainInput.focus();
+                    }
+                });
+            });
+            
+            // 추천 질문 클릭 시
+            suggestionChips.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    if (airMainInput) {
+                        airMainInput.value = this.textContent;
+                        airMainInput.focus();
+                    }
+                });
+            });
+            
+            // 메인 전송 버튼 클릭
+            if (airMainSend) {
+                airMainSend.addEventListener('click', function() {
+                    sendMainAirQuestion();
+                });
+            }
+            
+            // 메인 입력창 엔터키
+            if (airMainInput) {
+                airMainInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendMainAirQuestion();
+                    }
+                });
+            }
+            
+            // 메인 AiR 질문 전송 함수
+            function sendMainAirQuestion() {
+                const question = airMainInput.value.trim();
+                if (question) {
+                    alert(`🤖 AiR 답변 준비 중...\n\n질문: "${question}"\n\n(데모 버전입니다. 실제 서비스에서는 AI가 과학적인 답변을 제공합니다.)`);
+                    airMainInput.value = '';
+                }
+            }
+            
+            // 기존 사이드바 AiR 이벤트 (있을 경우)
+            if (airQuestions) {
+                airQuestions.forEach(question => {
+                    question.addEventListener('click', function() {
+                        const questionText = this.querySelector('.q-text').textContent;
+                        if (airInput) {
+                            airInput.value = questionText;
+                            airInput.focus();
+                        }
+                    });
+                });
+            }
+            
+            if (airSendBtn) {
+                airSendBtn.addEventListener('click', function() {
+                    sendAirQuestion();
+                });
+            }
+            
+            if (airInput) {
+                airInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendAirQuestion();
+                    }
+                });
+            }
+            
+            function sendAirQuestion() {
+                const question = airInput.value.trim();
+                if (question) {
+                    alert(`AiR에게 질문: "${question}"\n\n(데모 버전입니다. 실제 AiR 서비스로 연결되지 않았습니다.)`);
+                    airInput.value = '';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
