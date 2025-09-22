@@ -1,1402 +1,185 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>개인정보보호시스템 체크리스트</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
-            background-color: #f8f9fa;
-        }
-        .container {
-            max-width: 1800px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .controls {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .btn-primary {
-            background-color: #3498db;
-            color: white;
-        }
-        .btn-success {
-            background-color: #27ae60;
-            color: white;
-        }
-        .btn-secondary {
-            background-color: #95a5a6;
-            color: white;
-        }
-        .btn:hover {
-            opacity: 0.8;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-            font-size: 13px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px 6px;
-            text-align: left;
-            vertical-align: top;
-        }
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            white-space: nowrap;
-        }
-        .policy-admin {
-            background-color: #ffffff;
-        }
-        .policy-security {
-            background-color: #ffffff;
-        }
-        .policy-db {
-            background-color: #ffffff;
-        }
-        .policy-view {
-            background-color: #ffffff;
-        }
-        .law-link {
-            color: #3498db;
-            text-decoration: none;
-            margin-right: 5px;
-            font-size: 11px;
-        }
-        .law-link:hover {
-            text-decoration: underline;
-        }
-        .detail-btn {
-            background-color: #17a2b8;
-            color: white;
-            border: none;
-            padding: 3px 6px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 10px;
-            margin-top: 3px;
-            display: block;
-        }
-        .detail-btn:hover {
-            background-color: #138496;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 900px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            position: absolute;
-            right: 15px;
-            top: 10px;
-        }
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-        }
-        .modal h3 {
-            margin-top: 0;
-            color: #2c3e50;
-            padding-right: 40px;
-        }
-        .law-detail {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 4px;
-            margin: 15px 0;
-            border: 1px solid #dee2e6;
-            line-height: 1.6;
-        }
-        .law-detail strong {
-            color: #2c3e50;
-        }
-        .number-col {
-            width: 4%;
-            text-align: center;
-            font-weight: bold;
-        }
-        .area-col {
-            width: 12%;
-        }
-        .function-col {
-            width: 25%;
-        }
-        .method-col {
-            width: 8%;
-        }
-        .current-col {
-            width: 20%;
-        }
-        .status-col {
-            width: 8%;
-        }
-        .law-col {
-            width: 18%;
-        }
-        .delete-col {
-            width: 5%;
-        }
-        .editable {
-            background: transparent;
-            border: none;
-            padding: 4px;
-            width: 100%;
-            height: 100%;
-            resize: vertical;
-            min-height: 40px;
-            font-family: inherit;
-            font-size: inherit;
-        }
-        .editable:focus {
-            background-color: #fff3cd;
-            outline: 2px solid #ffc107;
-            border-radius: 3px;
-        }
-        .status-select {
-            width: 100%;
-            border: none;
-            background: transparent;
-            padding: 4px;
-            font-family: inherit;
-            font-size: inherit;
-        }
-        .status-select:focus {
-            background-color: #fff3cd;
-            outline: 2px solid #ffc107;
-            border-radius: 3px;
-        }
-        .status-ok { background-color: #ffffff; }
-        .status-partial { background-color: #f8f9fa; }
-        .status-no { background-color: #fce4ec; color: #333; }
-        .status-no td { color: white; }
-        .add-row-btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-        .delete-btn {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 2px 6px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 11px;
-        }
-        .delete-btn:hover {
-            background-color: #5a6268;
-        }
-        .export-btn {
-            background-color: #17a2b8;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>개인정보 체크리스트</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      text-align: left;
+    }
+    textarea {
+      width: 100%;
+      resize: vertical;
+    }
+    .status-O { background-color: #d0f0c0; }
+    .status-일부 { background-color: #fff3cd; }
+    .status-X { background-color: #f8d7da; }
+    .btn {
+      padding: 8px 12px;
+      margin-right: 5px;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-danger { background: #dc3545; }
+    .btn-success { background: #28a745; }
+    .btn-primary { background: #17a2b8; }
+    select {
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>개인정보보호시스템 체크리스트 - 관련 법령 상세</h1>
-        
-        <div class="controls">
-            <button class="add-row-btn" onclick="addNewRow()">+ 새 항목 추가</button>
-            <button class="export-btn" onclick="exportData()">데이터 내보내기</button>
-            <button class="btn btn-secondary" onclick="saveToLocalStorage()">저장</button>
-            <button class="btn btn-primary" onclick="loadFromLocalStorage()">불러오기</button>
-        </div>
-        
-        <table id="checklistTable">
-            <thead>
-                <tr>
-                    <th class="number-col">번호</th>
-                    <th class="area-col">주요 영역</th>
-                    <th class="function-col">기능 / 해야 할 일</th>
-                    <th class="method-col">적용 방법</th>
-                    <th class="current-col">현재</th>
-                    <th class="status-col">상태</th>
-                    <th class="law-col">관련 법령</th>
-                    <th class="delete-col">삭제</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="policy-admin">
-                    <td class="number-col">1</td>
-                    <td><textarea class="editable">관리자 계정 정책</textarea></td>
-                    <td><textarea class="editable">관리자 계정 생성/변경 시 승인 프로세스 구축</textarea></td>
-                    <td><textarea class="editable">정책</textarea></td>
-                    <td><textarea class="editable">1. 관리자 계정 요청 시 개발센터에서 발급한다. 
-2. 별도 승인과정이 없다.</textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="">선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요" selected>일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제2호가목</a>,
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조의2제1항제2호</a>
-                        <button class="detail-btn" onclick="showDetail(1)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-admin">
-                    <td class="number-col">2</td>
-                    <td><textarea class="editable">관리자 계정 정책</textarea></td>
-                    <td><textarea class="editable">조직/역할별 관리자 권한 분류 체계 수립</textarea></td>
-                    <td><textarea class="editable">정책/개발</textarea></td>
-                    <td><textarea class="editable">1. 조직/직무 에 따른 권한 구분이 없다.
-2. 기획 > 개발 필요</textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="">선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X" selected>X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제6조</a>,
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제2호가목</a>
-                        <button class="detail-btn" onclick="showDetail(2)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-admin">
-                    <td class="number-col">3</td>
-                    <td><textarea class="editable">관리자 계정 정책</textarea></td>
-                    <td><textarea class="editable">관리자 계정에 유효기간(만료일) 설정 기능 도입</textarea></td>
-                    <td><textarea class="editable">정책</textarea></td>
-                    <td><textarea class="editable">1. 퇴사/계약 만료 등 권한 종료 관리가 없다.
-2. 주기적 검수로 개발없이 운영에서 처리 가능</textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="">선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요" selected>일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제4조</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제6조</a>
-                        <button class="detail-btn" onclick="showDetail(3)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-admin">
-                    <td class="number-col">4</td>
-                    <td><textarea class="editable">관리자 계정 정책</textarea></td>
-                    <td><textarea class="editable">권한 변경은 최고 관리자만 가능하도록 제한</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제2호가목</a>,
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조의2제1항제2호</a>
-                        <button class="detail-btn" onclick="showDetail(4)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-admin">
-                    <td class="number-col">5</td>
-                    <td><textarea class="editable">관리자 계정 정책</textarea></td>
-                    <td><textarea class="editable">관리자 권한 승인/변경 로그 저장</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제5호가목</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제10조</a>
-                        <button class="detail-btn" onclick="showDetail(5)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-security">
-                    <td class="number-col">6</td>
-                    <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
-                    <td><textarea class="editable">사내망/VPN IP 이외 접근 차단 (IP 화이트리스트)</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제3호나목</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제5조</a>
-                        <button class="detail-btn" onclick="showDetail(6)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-security">
-                    <td class="number-col">7</td>
-                    <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
-                    <td><textarea class="editable">관리자 로그인 시 OTP (또는 문자 인증) 적용</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제2호나목</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제5조</a>
-                        <button class="detail-btn" onclick="showDetail(7)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-security">
-                    <td class="number-col">8</td>
-                    <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
-                    <td><textarea class="editable">관리자 로그인 후 1시간 미사용 시 자동 로그아웃</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제5조</a>
-                        <button class="detail-btn" onclick="showDetail(8)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-security">
-                    <td class="number-col">9</td>
-                    <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
-                    <td><textarea class="editable">30일 간격 비밀번호 변경 강제화 로직 구현</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제4호가목</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제4조</a>
-                        <button class="detail-btn" onclick="showDetail(9)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-security">
-                    <td class="number-col">10</td>
-                    <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
-                    <td><textarea class="editable">비밀번호 복잡성 정책: 10자 이상 + 숫자/특수문자 포함 + 반복 제한</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제4조</a>
-                        <button class="detail-btn" onclick="showDetail(10)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-security">
-                    <td class="number-col">11</td>
-                    <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
-                    <td><textarea class="editable">90일 이상 미접속 관리자 계정 자동 잠금 처리</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제4조</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제6조</a>
-                        <button class="detail-btn" onclick="showDetail(11)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-security">
-                    <td class="number-col">12</td>
-                    <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
-                    <td><textarea class="editable">OTP 등록/초기화/비활성화 관리 UI 구축</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제2호나목</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제5조</a>
-                        <button class="detail-btn" onclick="showDetail(12)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-db">
-                    <td class="number-col">13</td>
-                    <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
-                    <td><textarea class="editable">개인정보 포함 DB 추출 요청 시 승인 프로세스 구축</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=136728&chrClsCd=010202" target="_blank" class="law-link">개인정보보호법 제18조</a>,
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조의2제1항제2호</a>
-                        <button class="detail-btn" onclick="showDetail(13)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-db">
-                    <td class="number-col">14</td>
-                    <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
-                    <td><textarea class="editable">승인 전 다운로드 차단 기능</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=136728&chrClsCd=010202" target="_blank" class="law-link">개인정보보호법 제18조</a>,
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제2호가목</a>
-                        <button class="detail-btn" onclick="showDetail(14)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-db">
-                    <td class="number-col">15</td>
-                    <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
-                    <td><textarea class="editable">승인 내역 및 반려 사유 로그 저장</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제5호가목</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제10조</a>
-                        <button class="detail-btn" onclick="showDetail(15)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-db">
-                    <td class="number-col">16</td>
-                    <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
-                    <td><textarea class="editable">승인 완료 후, 다운로드 유효시간 제한 설정 기능</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=136728&chrClsCd=010202" target="_blank" class="law-link">개인정보보호법 제21조</a>,
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제2호가목</a>
-                        <button class="detail-btn" onclick="showDetail(16)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-db">
-                    <td class="number-col">17</td>
-                    <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
-                    <td><textarea class="editable">추출된 파일 자동 암호화 (ZIP + 비밀번호)</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제4호나목</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제7조</a>
-                        <button class="detail-btn" onclick="showDetail(17)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-db">
-                    <td class="number-col">18</td>
-                    <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
-                    <td><textarea class="editable">다운로드 시 비밀번호 별도 전송 or 인증</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제7조</a>
-                        <button class="detail-btn" onclick="showDetail(18)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-db">
-                    <td class="number-col">19</td>
-                    <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
-                    <td><textarea class="editable">엑셀 내 개인정보 항목(이름, 번호 등)은 마스킹 상태로 기본 제공</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제4호나목</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제7조</a>
-                        <button class="detail-btn" onclick="showDetail(19)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-db">
-                    <td class="number-col">20</td>
-                    <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
-                    <td><textarea class="editable">알림톡/문자 발송용 데이터는 파일 추출 없이 API 연동 방식으로 전환</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=136728&chrClsCd=010202" target="_blank" class="law-link">개인정보보호법 제18조</a>
-                        <button class="detail-btn" onclick="showDetail(20)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-db">
-                    <td class="number-col">21</td>
-                    <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
-                    <td><textarea class="editable">발송 로그 및 실패 내역 자동 저장 및 리포트화</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제5호가목</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제10조</a>
-                        <button class="detail-btn" onclick="showDetail(21)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-view">
-                    <td class="number-col">22</td>
-                    <td><textarea class="editable">개인정보 조회 정책</textarea></td>
-                    <td><textarea class="editable">개인정보 열람 시 열람자, 일시, 항목 로그 자동 기록</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=136728&chrClsCd=010202" target="_blank" class="law-link">개인정보보호법 제29조</a>,
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제5호가목</a>
-                        <button class="detail-btn" onclick="showDetail(22)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-view">
-                    <td class="number-col">23</td>
-                    <td><textarea class="editable">개인정보 조회 정책</textarea></td>
-                    <td><textarea class="editable">고객 상세 화면 열람 시 마스킹 상태로 기본 노출</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제4호나목</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제7조</a>
-                        <button class="detail-btn" onclick="showDetail(23)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-view">
-                    <td class="number-col">24</td>
-                    <td><textarea class="editable">개인정보 조회 정책</textarea></td>
-                    <td><textarea class="editable">마스킹 해제 시 해제 사유 입력 UI 제공</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제6조</a>
-                        <button class="detail-btn" onclick="showDetail(24)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-view">
-                    <td class="number-col">25</td>
-                    <td><textarea class="editable">개인정보 조회 정책</textarea></td>
-                    <td><textarea class="editable">근무 외 시간(야간/주말) 열람 시 관리자 경고 또는 사유 요청</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조의2제1항제3호</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제10조</a>
-                        <button class="detail-btn" onclick="showDetail(25)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-view">
-                    <td class="number-col">26</td>
-                    <td><textarea class="editable">개인정보 조회 정책</textarea></td>
-                    <td><textarea class="editable">상세정보 전체 열람 시 관리자 권한 제한 + 사유 필수</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제6조</a>
-                        <button class="detail-btn" onclick="showDetail(26)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-                <tr class="policy-view">
-                    <td class="number-col">27</td>
-                    <td><textarea class="editable">개인정보 조회 정책</textarea></td>
-                    <td><textarea class="editable">개인정보 열람 로그 관리자(보안관련) 열람 가능하도록 뷰 제공</textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td><textarea class="editable"></textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="" selected>선택</option>
-                            <option value="O">O</option>
-                            <option value="일부 개선 필요">일부 개선 필요</option>
-                            <option value="X">X</option>
-                        </select>
-                    </td>
-                    <td>
-                        <a href="https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lspttninfSeq=66999&chrClsCd=010202" target="_blank" class="law-link">시행령 제30조제1항제5호가목</a>,
-                        <a href="https://www.law.go.kr/admRulLsInfoP.do?chrClsCd=010202&admRulSeq=2100000229672" target="_blank" class="law-link">안전성확보조치기준 제10조</a>
-                        <button class="detail-btn" onclick="showDetail(27)">상세보기</button>
-                    </td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                </tr>
-            </tbody>
-        </table>
 
-        <div id="lawModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <h3 id="modalTitle">법령 상세 내용</h3>
-                <div id="modalContent"></div>
-            </div>
-        </div>
-    </div>
+  <h2>🔒 개인정보 보호 체크리스트</h2>
 
-    <script>
-        const lawDetails = {
-            1: {
-                title: '번호 1: 관리자 계정 생성/변경 시 승인 프로세스 구축',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제2호가목</strong><br>
-                        개인정보처리시스템에 대한 접근 권한의 부여·변경·말소 등에 관한 기준의 수립·시행
-                    </div>
-                    <div class="law-detail">
-                        <strong>시행령 제30조의2제1항제2호</strong><br>
-                        정당한 권한을 가진 개인정보취급자에게 접근 권한을 부여·변경·말소 등을 할 수 있도록 하는 등 접근 권한의 안전한 관리를 위해 필요한 조치
-                    </div>
-                `
-            },
-            2: {
-                title: '번호 2: 조직/역할별 관리자 권한 분류 체계 수립',
-                content: `
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제6조</strong><br>
-                        개인정보처리시스템에 대한 접근권한을 업무상 필요에 따라 최소한으로 부여하고, 접근권한을 달리하는 사용자 그룹을 설정하여 그룹별로 접근할 수 있는 개인정보의 범위를 달리 하여야 한다
-                    </div>
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제2호가목</strong><br>
-                        접근 권한의 부여·변경·말소 등에 관한 기준의 수립·시행
-                    </div>
-                `
-            },
-            3: {
-                title: '번호 3: 관리자 계정에 유효기간(만료일) 설정 기능 도입',
-                content: `
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제4조</strong><br>
-                        개인정보취급자가 퇴직, 전보 등의 사유로 업무가 변경된 경우 즉시 계정 삭제 또는 접근 권한 변경. 90일 이상 사용하지 않은 계정은 별도 분리 보관하거나 삭제
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제6조</strong><br>
-                        개인정보취급자에 대한 접근권한을 주기적으로 점검하여 불필요한 권한을 제거
-                    </div>
-                `
-            },
-            4: {
-                title: '번호 4: 권한 변경은 최고 관리자만 가능하도록 제한',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제2호가목</strong><br>
-                        접근 권한의 부여·변경·말소 등에 관한 기준의 수립·시행
-                    </div>
-                    <div class="law-detail">
-                        <strong>시행령 제30조의2제1항제2호</strong><br>
-                        접근 권한의 안전한 관리를 위해 필요한 조치
-                    </div>
-                `
-            },
-            5: {
-                title: '번호 5: 관리자 권한 승인/변경 로그 저장',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제5호가목</strong><br>
-                        개인정보처리시스템에 접속한 자의 접속일시, 처리내역 등 접속기록의 저장·점검 및 이의 확인·감독
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제10조</strong><br>
-                        개인정보처리시스템에 접속한 기록을 6개월 이상 보관·관리하여야 하며, 접속기록은 위조·변조·도난·분실되지 않도록 안전하게 보관
-                    </div>
-                `
-            },
-            6: {
-                title: '번호 6: 사내망/VPN IP 이외 접근 차단 (IP 화이트리스트)',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제3호나목</strong><br>
-                        개인정보처리시스템에 접속하는 개인정보취급자의 컴퓨터 등에 대한 인터넷망의 차단
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제5조</strong><br>
-                        정보통신망을 통한 불법적인 접근 및 침해를 방지하기 위한 접근통제시스템에 대한 물리적 접근 방지
-                    </div>
-                `
-            },
-            7: {
-                title: '번호 7: 관리자 로그인 시 OTP (또는 문자 인증) 적용',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제2호나목</strong><br>
-                        정당한 권한을 가진 자에 의한 접근인지를 확인하기 위해 필요한 인증수단 적용 기준의 설정 및 운영
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제5조</strong><br>
-                        관리자 계정에 대해서는 일반 사용자와 구별되는 강화된 인증수단을 적용
-                    </div>
-                `
-            },
-            8: {
-                title: '번호 8: 관리자 로그인 후 1시간 미사용 시 자동 로그아웃',
-                content: `
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제5조</strong><br>
-                        개인정보처리시스템에 일정시간 접속하지 않을 경우 자동으로 시스템 접속을 차단하는 조치
-                    </div>
-                `
-            },
-            9: {
-                title: '번호 9: 30일 간격 비밀번호 변경 강제화 로직 구현',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제4호가목</strong><br>
-                        비밀번호의 일방향 암호화 저장 등 인증정보의 암호화 저장 또는 이에 상응하는 조치
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제4조</strong><br>
-                        비밀번호는 60일마다 변경하되, 특별한 보안조치가 적용된 경우에는 그러하지 아니한다
-                    </div>
-                `
-            },
-            10: {
-                title: '번호 10: 비밀번호 복잡성 정책: 10자 이상 + 숫자/특수문자 포함 + 반복 제한',
-                content: `
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제4조</strong><br>
-                        비밀번호는 다음 각 목의 문자, 숫자, 특수문자 중 2종류 이상을 조합하여 최소 10자리 이상 또는 3종류 이상을 조합하여 최소 8자리 이상으로 구성. 연속된 문자나 숫자, 동일한 문자나 숫자를 연속하여 사용하지 않도록 제한
-                    </div>
-                `
-            },
-            11: {
-                title: '번호 11: 90일 이상 미접속 관리자 계정 자동 잠금 처리',
-                content: `
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제4조</strong><br>
-                        90일 이상 사용하지 않은 계정은 별도 분리 보관하거나 삭제
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제6조</strong><br>
-                        개인정보취급자에 대한 접근권한을 주기적으로 점검하여 불필요한 권한을 제거
-                    </div>
-                `
-            },
-            12: {
-                title: '번호 12: OTP 등록/초기화/비활성화 관리 UI 구축',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제2호나목</strong><br>
-                        정당한 권한을 가진 자에 의한 접근인지를 확인하기 위해 필요한 인증수단 적용 기준의 설정 및 운영
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제5조</strong><br>
-                        강화된 인증수단 적용
-                    </div>
-                `
-            },
-            13: {
-                title: '번호 13: 개인정보 포함 DB 추출 요청 시 승인 프로세스 구축',
-                content: `
-                    <div class="law-detail">
-                        <strong>개인정보보호법 제18조</strong><br>
-                        개인정보처리자는 개인정보를 수집·이용목적 범위에서 처리하여야 하며, 당초 수집목적과 합리적으로 관련된 범위에서만 이용할 수 있다
-                    </div>
-                    <div class="law-detail">
-                        <strong>시행령 제30조의2제1항제2호</strong><br>
-                        접근 권한의 안전한 관리를 위해 필요한 조치
-                    </div>
-                `
-            },
-            14: {
-                title: '번호 14: 승인 전 다운로드 차단 기능',
-                content: `
-                    <div class="law-detail">
-                        <strong>개인정보보호법 제18조</strong><br>
-                        개인정보 이용·제공 제한 원칙
-                    </div>
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제2호가목</strong><br>
-                        접근 권한의 부여·변경·말소 등에 관한 기준의 수립·시행
-                    </div>
-                `
-            },
-            15: {
-                title: '번호 15: 승인 내역 및 반려 사유 로그 저장',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제5호가목</strong><br>
-                        접속일시, 처리내역 등 접속기록의 저장·점검
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제10조</strong><br>
-                        접속기록 6개월 이상 보관·관리
-                    </div>
-                `
-            },
-            16: {
-                title: '번호 16: 승인 완료 후, 다운로드 유효시간 제한 설정 기능',
-                content: `
-                    <div class="law-detail">
-                        <strong>개인정보보호법 제21조</strong><br>
-                        개인정보처리자는 보유기간의 경과, 개인정보의 처리목적 달성 등 그 개인정보가 불필요하게 되었을 때에는 지체 없이 그 개인정보를 파기하여야 한다
-                    </div>
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제2호가목</strong><br>
-                        접근 권한의 시한 관리
-                    </div>
-                `
-            },
-            17: {
-                title: '번호 17: 추출된 파일 자동 암호화 (ZIP + 비밀번호)',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제4호나목</strong><br>
-                        주민등록번호 등 보호위원회가 정하여 고시하는 정보의 암호화 저장 또는 이에 상응하는 조치
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제7조</strong><br>
-                        개인정보를 정보통신망을 통하여 송신하거나 보조저장매체 등을 통하여 전달하는 경우에는 이를 암호화하여야 한다
-                    </div>
-                `
-            },
-            18: {
-                title: '번호 18: 다운로드 시 비밀번호 별도 전송 or 인증',
-                content: `
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제7조</strong><br>
-                        안전한 암호화 알고리즘을 사용하여 암호화. 암호화 키는 개인정보와 별도로 안전하게 관리
-                    </div>
-                `
-            },
-            192: {
-                title: '번호 19: 엑셀 내 개인정보 항목(이름, 번호 등)은 마스킹 상태로 기본 제공',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제4호나목</strong><br>
-                        개인정보의 암호화 저장
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제7조</strong><br>
-                        개인정보 암호화 조치
-                    </div>
-                `
-            },
-            20: {
-                title: '번호 20: 알림톡/문자 발송용 데이터는 파일 추출 없이 API 연동 방식으로 전환',
-                content: `
-                    <div class="law-detail">
-                        <strong>개인정보보호법 제18조</strong><br>
-                        개인정보 처리 목적 달성을 위한 최소 처리 원칙
-                    </div>
-                `
-            },
-            21: {
-                title: '번호 21: 발송 로그 및 실패 내역 자동 저장 및 리포트화',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제5호가목</strong><br>
-                        처리내역 등 기록의 저장·점검
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제10조</strong><br>
-                        개인정보 처리 현황 정기적 점검
-                    </div>
-                `
-            },
-            22: {
-                title: '번호 22: 개인정보 열람 시 열람자, 일시, 항목 로그 자동 기록',
-                content: `
-                    <div class="law-detail">
-                        <strong>개인정보보호법 제29조</strong><br>
-                        개인정보처리자는 접속기록 보관 등 안전성 확보에 필요한 기술적·관리적 조치를 하여야 한다
-                    </div>
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제5호가목</strong><br>
-                        개인정보처리시스템에 접속한 자의 접속일시, 처리내역 등 접속기록의 저장·점검
-                    </div>
-                `
-            },
-            23: {
-                title: '번호 23: 고객 상세 화면 열람 시 마스킹 상태로 기본 노출',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제4호나목</strong><br>
-                        개인정보의 암호화 저장
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제7조</strong><br>
-                        개인정보 보호를 위한 마스킹 처리
-                    </div>
-                `
-            },
-            24: {
-                title: '번호 24: 마스킹 해제 시 해제 사유 입력 UI 제공',
-                content: `
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제6조</strong><br>
-                        개인정보취급자의 업무 내용에 따라 접근 가능한 개인정보의 범위를 제한
-                    </div>
-                `
-            },
-            25: {
-                title: '번호 25: 근무 외 시간(야간/주말) 열람 시 관리자 경고 또는 사유 요청',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조의2제1항제3호</strong><br>
-                        개인정보에 대한 불법적인 접근 및 침해사고 방지를 위한 공공시스템 접속기록의 저장·분석·점검·관리 등의 조치
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제10조</strong><br>
-                        이상 징후를 발견한 경우 즉시 대응조치
-                    </div>
-                `
-            },
-            26: {
-                title: '번호 26: 상세정보 전체 열람 시 관리자 권한 제한 + 사유 필수',
-                content: `
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제6조</strong><br>
-                        개인정보취급자별로 개인정보처리시스템의 메뉴 및 기능에 대한 접근권한을 차등 부여
-                    </div>
-                `
-            },
-            27: {
-                title: '번호 27: 개인정보 열람 로그 관리자(보안관련) 열람 가능하도록 뷰 제공',
-                content: `
-                    <div class="law-detail">
-                        <strong>시행령 제30조제1항제5호가목</strong><br>
-                        접속기록의 저장·점검 및 이의 확인·감독
-                    </div>
-                    <div class="law-detail">
-                        <strong>안전성확보조치기준 제10조</strong><br>
-                        개인정보의 오·남용, 분실·도난·유출·위조·변조·훼손 등을 방지하기 위하여 개인정보 처리 현황을 정기적으로 점검
-                    </div>
-                `
-            }
-        };
+  <div style="margin-bottom: 10px;">
+    <button class="btn btn-success" onclick="saveToSheetDB()">💾 저장</button>
+    <button class="btn btn-primary" onclick="loadFromSheetDB()">📥 불러오기</button>
+    <button class="btn btn-danger" onclick="addRow()">➕ 행 추가</button>
+  </div>
 
-        let nextId = 28;
+  <table id="checklistTable">
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>점검영역</th>
+        <th>점검항목</th>
+        <th>개선방안</th>
+        <th>현재상태</th>
+        <th>상태</th>
+        <th>관련 법령</th>
+        <th>삭제</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 불러오기 시 자동 생성 -->
+    </tbody>
+  </table>
 
-        function showDetail(id) {
-            const modal = document.getElementById('lawModal');
-            const title = document.getElementById('modalTitle');
-            const content = document.getElementById('modalContent');
-            
-            if (lawDetails[id]) {
-                title.textContent = lawDetails[id].title;
-                content.innerHTML = lawDetails[id].content;
-            } else {
-                title.textContent = '법령 상세 내용';
-                content.innerHTML = '<div class="law-detail">해당 법령의 상세 내용이 준비 중입니다.</div>';
-            }
-            
-            modal.style.display = 'block';
-        }
+  <script>
+    const API_URL = "https://sheetdb.io/api/v1/gfnrpqrd52v6t"; // ←  SheetDB API 
 
-        function closeModal() {
-            document.getElementById('lawModal').style.display = 'none';
-        }
+    let nextId = 1;
 
-        function updateStatusClass(selectElement) {
-            if (!selectElement) return;
-            
-            const row = selectElement.closest('tr');
-            if (!row) return;
-            
-            const value = selectElement.value;
-            
-            // 상태 클래스 제거
-            row.classList.remove('status-ok', 'status-partial', 'status-no');
-            
-            // 새 상태 클래스 추가
-            if (value === 'O') {
-                row.classList.add('status-ok');
-            } else if (value === '일부 개선 필요') {
-                row.classList.add('status-partial');
-            } else if (value === 'X') {
-                row.classList.add('status-no');
-            }
-        }
+    function addRow() {
+      const tbody = document.querySelector('#checklistTable tbody');
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td class="number-col">${nextId++}</td>
+        <td><textarea class="editable"></textarea></td>
+        <td><textarea class="editable"></textarea></td>
+        <td><textarea class="editable"></textarea></td>
+        <td><textarea class="editable"></textarea></td>
+        <td>
+          <select class="status-select" onchange="updateStatusClass(this)">
+            <option value="">선택</option>
+            <option value="O">O</option>
+            <option value="일부 개선 필요">일부 개선 필요</option>
+            <option value="X">X</option>
+          </select>
+        </td>
+        <td><textarea class="editable"></textarea></td>
+        <td><button class="btn btn-danger" onclick="deleteRow(this)">삭제</button></td>
+      `;
+      tbody.appendChild(row);
+    }
 
-        function addNewRow() {
-            const tbody = document.querySelector('#checklistTable tbody');
+    function deleteRow(button) {
+      const row = button.closest('tr');
+      row.remove();
+      updateRowNumbers();
+    }
+
+    function updateRowNumbers() {
+      const rows = document.querySelectorAll('#checklistTable tbody tr');
+      rows.forEach((row, index) => {
+        row.querySelector('.number-col').textContent = index + 1;
+      });
+      nextId = rows.length + 1;
+    }
+
+    function updateStatusClass(selectElement) {
+      const row = selectElement.closest('tr');
+      row.className = '';
+      const value = selectElement.value;
+      if (value === "O") row.classList.add('status-O');
+      else if (value === "일부 개선 필요") row.classList.add('status-일부');
+      else if (value === "X") row.classList.add('status-X');
+    }
+
+    function saveToSheetDB() {
+      const rows = document.querySelectorAll('#checklistTable tbody tr');
+      const data = [];
+
+      rows.forEach(row => {
+        const cells = row.querySelectorAll('td');
+        data.push({
+          id: cells[0].textContent.trim(),
+          area: cells[1].querySelector('textarea').value,
+          function: cells[2].querySelector('textarea').value,
+          method: cells[3].querySelector('textarea').value,
+          current: cells[4].querySelector('textarea').value,
+          status: cells[5].querySelector('select').value,
+          law: cells[6].querySelector('textarea').value || '',
+          className: row.className
+        });
+      });
+
+      fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: data })
+      })
+      .then(res => res.json())
+      .then(() => alert("✅ 저장 완료!"))
+      .catch(err => alert("❌ 저장 실패: " + err));
+    }
+
+    function loadFromSheetDB() {
+      fetch(API_URL)
+        .then(res => res.json())
+        .then(data => {
+          const tbody = document.querySelector('#checklistTable tbody');
+          tbody.innerHTML = '';
+          nextId = data.length + 1;
+
+          data.forEach(row => {
             const newRow = document.createElement('tr');
-            newRow.className = 'policy-admin';
-            
+            newRow.className = row.className || '';
+
             newRow.innerHTML = `
-                <td class="number-col">${nextId}</td>
-                <td><textarea class="editable" placeholder="주요 영역을 입력하세요"></textarea></td>
-                <td><textarea class="editable" placeholder="기능 / 해야 할 일을 입력하세요"></textarea></td>
-                <td><textarea class="editable" placeholder="적용 방법을 입력하세요"></textarea></td>
-                <td><textarea class="editable" placeholder="현재 상황을 입력하세요"></textarea></td>
-                <td>
-                    <select class="status-select" onchange="updateStatusClass(this)">
-                        <option value="" selected>선택</option>
-                        <option value="O">O</option>
-                        <option value="일부 개선 필요">일부 개선 필요</option>
-                        <option value="X">X</option>
-                    </select>
-                </td>
-                <td><textarea class="editable" placeholder="관련 법령을 입력하세요"></textarea></td>
-                <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
+              <td class="number-col">${row.id}</td>
+              <td><textarea class="editable">${row.area || ''}</textarea></td>
+              <td><textarea class="editable">${row.function || ''}</textarea></td>
+              <td><textarea class="editable">${row.method || ''}</textarea></td>
+              <td><textarea class="editable">${row.current || ''}</textarea></td>
+              <td>
+                <select class="status-select" onchange="updateStatusClass(this)">
+                  <option value="">선택</option>
+                  <option value="O" ${row.status === 'O' ? 'selected' : ''}>O</option>
+                  <option value="일부 개선 필요" ${row.status === '일부 개선 필요' ? 'selected' : ''}>일부 개선 필요</option>
+                  <option value="X" ${row.status === 'X' ? 'selected' : ''}>X</option>
+                </select>
+              </td>
+              <td><textarea class="editable">${row.law || ''}</textarea></td>
+              <td><button class="btn btn-danger" onclick="deleteRow(this)">삭제</button></td>
             `;
-            
+
             tbody.appendChild(newRow);
-            nextId++;
-        }
-
-        function deleteRow(button) {
-            if (confirm('이 항목을 삭제하시겠습니까?')) {
-                const row = button.closest('tr');
-                row.remove();
-            }
-        }
-
-        function exportData() {
-            const table = document.getElementById('checklistTable');
-            const rows = table.querySelectorAll('tbody tr');
-            const data = [];
-            
-            // 헤더 추가
-            data.push(['번호', '주요 영역', '기능 / 해야 할 일', '적용 방법', '현재', '상태', '관련 법령']);
-            
-            // 데이터 행 추가
-            rows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                const rowData = [
-                    cells[0].textContent.trim(),
-                    cells[1].querySelector('textarea').value,
-                    cells[2].querySelector('textarea').value,
-                    cells[3].querySelector('textarea').value,
-                    cells[4].querySelector('textarea').value,
-                    cells[5].querySelector('select').value,
-                    cells[6].textContent.trim().replace(/상세보기/g, '').trim()
-                ];
-                data.push(rowData);
-            });
-            
-            // CSV 형태로 변환
-            const csvContent = data.map(row => 
-                row.map(cell => `"${cell.replace(/"/g, '""')}"`).join(',')
-            ).join('\n');
-            
-            // 다운로드
-            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = '개인정보보호시스템_체크리스트_' + new Date().toISOString().split('T')[0] + '.csv';
-            link.click();
-        }
-
-        function saveToLocalStorage() {
-            const table = document.getElementById('checklistTable');
-            const rows = table.querySelectorAll('tbody tr');
-            const data = [];
-            
-            rows.forEach(row => {
-                const cells = row.querySelectorAll('td');
-                const rowData = {
-                    id: cells[0].textContent.trim(),
-                    area: cells[1].querySelector('textarea').value,
-                    function: cells[2].querySelector('textarea').value,
-                    method: cells[3].querySelector('textarea').value,
-                    current: cells[4].querySelector('textarea').value,
-                    status: cells[5].querySelector('select').value,
-                    law: cells[6].innerHTML,
-                    className: row.className
-                };
-                data.push(rowData);
-            });
-            
-            const saveData = {
-                data: data,
-                nextId: nextId,
-                timestamp: new Date().toISOString()
-            };
-            
-            // 메모리에 임시 저장
-            window.checklistData = saveData;
-            alert('데이터가 임시 저장되었습니다.');
-        }
-
-        function loadFromLocalStorage() {
-            if (!window.checklistData) {
-                alert('저장된 데이터가 없습니다.');
-                return;
-            }
-            
-            if (!confirm('현재 데이터를 불러온 데이터로 덮어쓰시겠습니까?')) {
-                return;
-            }
-            
-            const tbody = document.querySelector('#checklistTable tbody');
-            tbody.innerHTML = '';
-            
-            const saveData = window.checklistData;
-            nextId = saveData.nextId;
-            
-            saveData.data.forEach(rowData => {
-                const newRow = document.createElement('tr');
-                newRow.className = rowData.className;
-                
-                newRow.innerHTML = `
-                    <td class="number-col">${rowData.id}</td>
-                    <td><textarea class="editable">${rowData.area}</textarea></td>
-                    <td><textarea class="editable">${rowData.function}</textarea></td>
-                    <td><textarea class="editable">${rowData.method}</textarea></td>
-                    <td><textarea class="editable">${rowData.current}</textarea></td>
-                    <td>
-                        <select class="status-select" onchange="updateStatusClass(this)">
-                            <option value="">선택</option>
-                            <option value="O" ${rowData.status === 'O' ? 'selected' : ''}>O</option>
-                            <option value="일부 개선 필요" ${rowData.status === '일부 개선 필요' ? 'selected' : ''}>일부 개선 필요</option>
-                            <option value="X" ${rowData.status === 'X' ? 'selected' : ''}>X</option>
-                        </select>
-                    </td>
-                    <td>${rowData.law}</td>
-                    <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
-                `;
-                
-                tbody.appendChild(newRow);
-                
-                // 상태에 따른 클래스 적용
-                updateStatusClass(newRow.querySelector('.status-select'));
-            });
-            
-            alert('데이터가 성공적으로 불러와졌습니다.');
-        }
-
-        // 초기 상태 클래스 설정
-        document.addEventListener('DOMContentLoaded', function() {
-            const selects = document.querySelectorAll('.status-select');
-            selects.forEach(select => {
-                if (select.value) {
-                    updateStatusClass(select);
-                }
-            });
-        });
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('lawModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal();
-            }
-        });
-    </script>
+            updateStatusClass(newRow.querySelector('.status-select'));
+          });
+        })
+        .catch(err => alert("❌ 불러오기 실패: " + err));
+    }
+  </script>
 </body>
 </html>
