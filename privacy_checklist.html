@@ -219,6 +219,7 @@
         .status-ok { background-color: #ffffff; }
         .status-partial { background-color: #f8f9fa; }
         .status-no { background-color: #dc3545; color: white; }
+        .status-no td { color: white; }
         .add-row-btn {
             background-color: #28a745;
             color: white;
@@ -343,7 +344,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-admin">
-                    <td class="number-col">5</td>
+                    <td class="number-col">4</td>
                     <td><textarea class="editable">관리자 계정 정책</textarea></td>
                     <td><textarea class="editable">권한 변경은 최고 관리자만 가능하도록 제한</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -364,7 +365,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-admin">
-                    <td class="number-col">6</td>
+                    <td class="number-col">5</td>
                     <td><textarea class="editable">관리자 계정 정책</textarea></td>
                     <td><textarea class="editable">관리자 권한 승인/변경 로그 저장</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -385,7 +386,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-security">
-                    <td class="number-col">7</td>
+                    <td class="number-col">6</td>
                     <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
                     <td><textarea class="editable">사내망/VPN IP 이외 접근 차단 (IP 화이트리스트)</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -406,7 +407,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-security">
-                    <td class="number-col">8</td>
+                    <td class="number-col">7</td>
                     <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
                     <td><textarea class="editable">관리자 로그인 시 OTP (또는 문자 인증) 적용</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -427,7 +428,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-security">
-                    <td class="number-col">10</td>
+                    <td class="number-col">8</td>
                     <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
                     <td><textarea class="editable">관리자 로그인 후 1시간 미사용 시 자동 로그아웃</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -447,7 +448,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-security">
-                    <td class="number-col">11</td>
+                    <td class="number-col">9</td>
                     <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
                     <td><textarea class="editable">30일 간격 비밀번호 변경 강제화 로직 구현</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -468,7 +469,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-security">
-                    <td class="number-col">12</td>
+                    <td class="number-col">10</td>
                     <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
                     <td><textarea class="editable">비밀번호 복잡성 정책: 10자 이상 + 숫자/특수문자 포함 + 반복 제한</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -488,7 +489,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-security">
-                    <td class="number-col">13</td>
+                    <td class="number-col">11</td>
                     <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
                     <td><textarea class="editable">90일 이상 미접속 관리자 계정 자동 잠금 처리</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -509,7 +510,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-security">
-                    <td class="number-col">15</td>
+                    <td class="number-col">12</td>
                     <td><textarea class="editable">관리자 접속 보안 정책</textarea></td>
                     <td><textarea class="editable">OTP 등록/초기화/비활성화 관리 UI 구축</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -530,7 +531,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-db">
-                    <td class="number-col">16</td>
+                    <td class="number-col">13</td>
                     <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
                     <td><textarea class="editable">개인정보 포함 DB 추출 요청 시 승인 프로세스 구축</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -551,7 +552,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-db">
-                    <td class="number-col">17</td>
+                    <td class="number-col">14</td>
                     <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
                     <td><textarea class="editable">승인 전 다운로드 차단 기능</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -572,7 +573,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-db">
-                    <td class="number-col">18</td>
+                    <td class="number-col">15</td>
                     <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
                     <td><textarea class="editable">승인 내역 및 반려 사유 로그 저장</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -593,7 +594,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-db">
-                    <td class="number-col">19</td>
+                    <td class="number-col">16</td>
                     <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
                     <td><textarea class="editable">승인 완료 후, 다운로드 유효시간 제한 설정 기능</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -614,7 +615,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-db">
-                    <td class="number-col">20</td>
+                    <td class="number-col">17</td>
                     <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
                     <td><textarea class="editable">추출된 파일 자동 암호화 (ZIP + 비밀번호)</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -635,7 +636,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-db">
-                    <td class="number-col">21</td>
+                    <td class="number-col">18</td>
                     <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
                     <td><textarea class="editable">다운로드 시 비밀번호 별도 전송 or 인증</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -655,7 +656,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-db">
-                    <td class="number-col">22</td>
+                    <td class="number-col">19</td>
                     <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
                     <td><textarea class="editable">엑셀 내 개인정보 항목(이름, 번호 등)은 마스킹 상태로 기본 제공</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -676,7 +677,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-db">
-                    <td class="number-col">23</td>
+                    <td class="number-col">20</td>
                     <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
                     <td><textarea class="editable">알림톡/문자 발송용 데이터는 파일 추출 없이 API 연동 방식으로 전환</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -696,7 +697,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-db">
-                    <td class="number-col">24</td>
+                    <td class="number-col">21</td>
                     <td><textarea class="editable">DB 추출 보안 정책</textarea></td>
                     <td><textarea class="editable">발송 로그 및 실패 내역 자동 저장 및 리포트화</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -717,7 +718,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-view">
-                    <td class="number-col">25</td>
+                    <td class="number-col">22</td>
                     <td><textarea class="editable">개인정보 조회 정책</textarea></td>
                     <td><textarea class="editable">개인정보 열람 시 열람자, 일시, 항목 로그 자동 기록</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -738,7 +739,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-view">
-                    <td class="number-col">26</td>
+                    <td class="number-col">23</td>
                     <td><textarea class="editable">개인정보 조회 정책</textarea></td>
                     <td><textarea class="editable">고객 상세 화면 열람 시 마스킹 상태로 기본 노출</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -759,7 +760,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-view">
-                    <td class="number-col">27</td>
+                    <td class="number-col">24</td>
                     <td><textarea class="editable">개인정보 조회 정책</textarea></td>
                     <td><textarea class="editable">마스킹 해제 시 해제 사유 입력 UI 제공</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -779,7 +780,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-view">
-                    <td class="number-col">28</td>
+                    <td class="number-col">25</td>
                     <td><textarea class="editable">개인정보 조회 정책</textarea></td>
                     <td><textarea class="editable">근무 외 시간(야간/주말) 열람 시 관리자 경고 또는 사유 요청</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -800,7 +801,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-view">
-                    <td class="number-col">29</td>
+                    <td class="number-col">26</td>
                     <td><textarea class="editable">개인정보 조회 정책</textarea></td>
                     <td><textarea class="editable">상세정보 전체 열람 시 관리자 권한 제한 + 사유 필수</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -820,7 +821,7 @@
                     <td><button class="delete-btn" onclick="deleteRow(this)">삭제</button></td>
                 </tr>
                 <tr class="policy-view">
-                    <td class="number-col">30</td>
+                    <td class="number-col">27</td>
                     <td><textarea class="editable">개인정보 조회 정책</textarea></td>
                     <td><textarea class="editable">개인정보 열람 로그 관리자(보안관련) 열람 가능하도록 뷰 제공</textarea></td>
                     <td><textarea class="editable"></textarea></td>
@@ -893,8 +894,8 @@
                     </div>
                 `
             },
-            5: {
-                title: '번호 5: 권한 변경은 최고 관리자만 가능하도록 제한',
+            4: {
+                title: '번호 4: 권한 변경은 최고 관리자만 가능하도록 제한',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조제1항제2호가목</strong><br>
@@ -906,8 +907,8 @@
                     </div>
                 `
             },
-            6: {
-                title: '번호 6: 관리자 권한 승인/변경 로그 저장',
+            5: {
+                title: '번호 5: 관리자 권한 승인/변경 로그 저장',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조제1항제5호가목</strong><br>
@@ -919,8 +920,8 @@
                     </div>
                 `
             },
-            7: {
-                title: '번호 7: 사내망/VPN IP 이외 접근 차단 (IP 화이트리스트)',
+            6: {
+                title: '번호 6: 사내망/VPN IP 이외 접근 차단 (IP 화이트리스트)',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조제1항제3호나목</strong><br>
@@ -932,8 +933,8 @@
                     </div>
                 `
             },
-            8: {
-                title: '번호 8: 관리자 로그인 시 OTP (또는 문자 인증) 적용',
+            7: {
+                title: '번호 7: 관리자 로그인 시 OTP (또는 문자 인증) 적용',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조제1항제2호나목</strong><br>
@@ -945,8 +946,8 @@
                     </div>
                 `
             },
-            10: {
-                title: '번호 10: 관리자 로그인 후 1시간 미사용 시 자동 로그아웃',
+            8: {
+                title: '번호 8: 관리자 로그인 후 1시간 미사용 시 자동 로그아웃',
                 content: `
                     <div class="law-detail">
                         <strong>안전성확보조치기준 제5조</strong><br>
@@ -954,8 +955,8 @@
                     </div>
                 `
             },
-            11: {
-                title: '번호 11: 30일 간격 비밀번호 변경 강제화 로직 구현',
+            9: {
+                title: '번호 9: 30일 간격 비밀번호 변경 강제화 로직 구현',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조제1항제4호가목</strong><br>
@@ -967,8 +968,8 @@
                     </div>
                 `
             },
-            12: {
-                title: '번호 12: 비밀번호 복잡성 정책: 10자 이상 + 숫자/특수문자 포함 + 반복 제한',
+            10: {
+                title: '번호 10: 비밀번호 복잡성 정책: 10자 이상 + 숫자/특수문자 포함 + 반복 제한',
                 content: `
                     <div class="law-detail">
                         <strong>안전성확보조치기준 제4조</strong><br>
@@ -976,8 +977,8 @@
                     </div>
                 `
             },
-            13: {
-                title: '번호 13: 90일 이상 미접속 관리자 계정 자동 잠금 처리',
+            11: {
+                title: '번호 11: 90일 이상 미접속 관리자 계정 자동 잠금 처리',
                 content: `
                     <div class="law-detail">
                         <strong>안전성확보조치기준 제4조</strong><br>
@@ -989,8 +990,8 @@
                     </div>
                 `
             },
-            15: {
-                title: '번호 15: OTP 등록/초기화/비활성화 관리 UI 구축',
+            12: {
+                title: '번호 12: OTP 등록/초기화/비활성화 관리 UI 구축',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조제1항제2호나목</strong><br>
@@ -1002,8 +1003,8 @@
                     </div>
                 `
             },
-            16: {
-                title: '번호 16: 개인정보 포함 DB 추출 요청 시 승인 프로세스 구축',
+            13: {
+                title: '번호 13: 개인정보 포함 DB 추출 요청 시 승인 프로세스 구축',
                 content: `
                     <div class="law-detail">
                         <strong>개인정보보호법 제18조</strong><br>
@@ -1015,8 +1016,8 @@
                     </div>
                 `
             },
-            17: {
-                title: '번호 17: 승인 전 다운로드 차단 기능',
+            14: {
+                title: '번호 14: 승인 전 다운로드 차단 기능',
                 content: `
                     <div class="law-detail">
                         <strong>개인정보보호법 제18조</strong><br>
@@ -1028,8 +1029,8 @@
                     </div>
                 `
             },
-            18: {
-                title: '번호 18: 승인 내역 및 반려 사유 로그 저장',
+            15: {
+                title: '번호 15: 승인 내역 및 반려 사유 로그 저장',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조제1항제5호가목</strong><br>
@@ -1041,8 +1042,8 @@
                     </div>
                 `
             },
-            19: {
-                title: '번호 19: 승인 완료 후, 다운로드 유효시간 제한 설정 기능',
+            16: {
+                title: '번호 16: 승인 완료 후, 다운로드 유효시간 제한 설정 기능',
                 content: `
                     <div class="law-detail">
                         <strong>개인정보보호법 제21조</strong><br>
@@ -1054,8 +1055,8 @@
                     </div>
                 `
             },
-            20: {
-                title: '번호 20: 추출된 파일 자동 암호화 (ZIP + 비밀번호)',
+            17: {
+                title: '번호 17: 추출된 파일 자동 암호화 (ZIP + 비밀번호)',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조제1항제4호나목</strong><br>
@@ -1067,8 +1068,8 @@
                     </div>
                 `
             },
-            21: {
-                title: '번호 21: 다운로드 시 비밀번호 별도 전송 or 인증',
+            18: {
+                title: '번호 18: 다운로드 시 비밀번호 별도 전송 or 인증',
                 content: `
                     <div class="law-detail">
                         <strong>안전성확보조치기준 제7조</strong><br>
@@ -1076,8 +1077,8 @@
                     </div>
                 `
             },
-            22: {
-                title: '번호 22: 엑셀 내 개인정보 항목(이름, 번호 등)은 마스킹 상태로 기본 제공',
+            192: {
+                title: '번호 19: 엑셀 내 개인정보 항목(이름, 번호 등)은 마스킹 상태로 기본 제공',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조제1항제4호나목</strong><br>
@@ -1089,8 +1090,8 @@
                     </div>
                 `
             },
-            23: {
-                title: '번호 23: 알림톡/문자 발송용 데이터는 파일 추출 없이 API 연동 방식으로 전환',
+            20: {
+                title: '번호 20: 알림톡/문자 발송용 데이터는 파일 추출 없이 API 연동 방식으로 전환',
                 content: `
                     <div class="law-detail">
                         <strong>개인정보보호법 제18조</strong><br>
@@ -1098,8 +1099,8 @@
                     </div>
                 `
             },
-            24: {
-                title: '번호 24: 발송 로그 및 실패 내역 자동 저장 및 리포트화',
+            21: {
+                title: '번호 21: 발송 로그 및 실패 내역 자동 저장 및 리포트화',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조제1항제5호가목</strong><br>
@@ -1111,8 +1112,8 @@
                     </div>
                 `
             },
-            25: {
-                title: '번호 25: 개인정보 열람 시 열람자, 일시, 항목 로그 자동 기록',
+            22: {
+                title: '번호 22: 개인정보 열람 시 열람자, 일시, 항목 로그 자동 기록',
                 content: `
                     <div class="law-detail">
                         <strong>개인정보보호법 제29조</strong><br>
@@ -1124,8 +1125,8 @@
                     </div>
                 `
             },
-            26: {
-                title: '번호 26: 고객 상세 화면 열람 시 마스킹 상태로 기본 노출',
+            23: {
+                title: '번호 23: 고객 상세 화면 열람 시 마스킹 상태로 기본 노출',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조제1항제4호나목</strong><br>
@@ -1137,8 +1138,8 @@
                     </div>
                 `
             },
-            27: {
-                title: '번호 27: 마스킹 해제 시 해제 사유 입력 UI 제공',
+            24: {
+                title: '번호 24: 마스킹 해제 시 해제 사유 입력 UI 제공',
                 content: `
                     <div class="law-detail">
                         <strong>안전성확보조치기준 제6조</strong><br>
@@ -1146,8 +1147,8 @@
                     </div>
                 `
             },
-            28: {
-                title: '번호 28: 근무 외 시간(야간/주말) 열람 시 관리자 경고 또는 사유 요청',
+            25: {
+                title: '번호 25: 근무 외 시간(야간/주말) 열람 시 관리자 경고 또는 사유 요청',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조의2제1항제3호</strong><br>
@@ -1159,8 +1160,8 @@
                     </div>
                 `
             },
-            29: {
-                title: '번호 29: 상세정보 전체 열람 시 관리자 권한 제한 + 사유 필수',
+            26: {
+                title: '번호 26: 상세정보 전체 열람 시 관리자 권한 제한 + 사유 필수',
                 content: `
                     <div class="law-detail">
                         <strong>안전성확보조치기준 제6조</strong><br>
@@ -1168,8 +1169,8 @@
                     </div>
                 `
             },
-            30: {
-                title: '번호 30: 개인정보 열람 로그 관리자(보안관련) 열람 가능하도록 뷰 제공',
+            27: {
+                title: '번호 27: 개인정보 열람 로그 관리자(보안관련) 열람 가능하도록 뷰 제공',
                 content: `
                     <div class="law-detail">
                         <strong>시행령 제30조제1항제5호가목</strong><br>
@@ -1183,7 +1184,7 @@
             }
         };
 
-        let nextId = 31;
+        let nextId = 28;
 
         function showDetail(id) {
             const modal = document.getElementById('lawModal');
